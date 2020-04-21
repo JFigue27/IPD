@@ -1,0 +1,9 @@
+{
+  "editor.formatOnSave": false,
+  "prettier.configPath": ".vscode/.prettierrc",
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#2C2B44",
+    "titleBar.activeBackground": "#3E3C5F",
+    "titleBar.activeForeground": "#FBFBFD"
+  }
+}

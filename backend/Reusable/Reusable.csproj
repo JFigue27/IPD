@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EPPlus.Core" Version="1.5.4" />
+    <PackageReference Include="RestSharp" Version="106.10.0" />
+    <PackageReference Include="ServiceStack.Core" Version="5.*" />
+    <PackageReference Include="ServiceStack.OrmLite.Core" Version="5.*" />
+    <PackageReference Include="ServiceStack.Server.Core" Version="5.*" />
+  </ItemGroup>
+
+</Project>
