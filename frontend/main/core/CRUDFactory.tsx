@@ -3,6 +3,8 @@ import moment from 'moment';
 import AppConfig from './AppConfig';
 import AuthService from '../core/AuthService';
 
+// moment.locale('es-us');
+
 const GeneralError = response => {
   //CommonResponse wrapper
   if (response.ErrorThrown) {
@@ -20,7 +22,7 @@ const GeneralError = response => {
       default:
         console.log(response);
         console.log(response.ResponseStatus.StackTrace);
-        alert(response.ResponseStatus.ErrorCode + '.\n' + response.ResponseStatus.Message);
+      // alert(response.ResponseStatus.ErrorCode + '.\n' + response.ResponseStatus.Message);
     }
     throw response.ResponseStatus.Message;
   }

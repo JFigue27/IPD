@@ -10,7 +10,6 @@ namespace Reusable.Rest
         public object AdditionalData { get; set; }
         public string ErrorType { get; set; }
 
-
         public CommonResponse(object result)
         {
             ErrorThrown = false;

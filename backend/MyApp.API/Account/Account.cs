@@ -15,9 +15,16 @@ namespace MyApp.Logic.Entities
     {
         public Account()
         {
+            Avatars = new List<Avatar>();
         }
+
+        public string AvatarFolder { get; set; }
         public string Departments { get; set; }
         public string ManagerInDepartments { get; set; }
+
+        [NotMapped]
+        [Ignore]
+        public List<Avatar> Avatars { get; set; }
 
         [NotMapped]
         [Ignore]

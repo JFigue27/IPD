@@ -53,7 +53,6 @@ namespace Reusable.Reports
                 targetRow = rowIndex;
             }
 
-
             if (targetColumn > maxColIndex) maxColIndex = targetColumn;
 
             if (mergeCols > 1)
@@ -370,7 +369,6 @@ namespace Reusable.Reports
             colIndex++;
         }
 
-
         /****************************************
          *                  API:                *
          ****************************************/
@@ -665,7 +663,6 @@ namespace Reusable.Reports
         {
             return InsertValue(value, "bool", colOffset, col: col, row: row);
         }
-
 
         //Exclusive Excel
         protected int CurrentRow()

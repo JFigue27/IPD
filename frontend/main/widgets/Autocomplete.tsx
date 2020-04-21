@@ -98,7 +98,7 @@ class AutocompleteWidget extends React.Component<Props> {
 
       if (flat) {
         this.setState({ value: entity[targetProp] });
-        onChange(entity, targetProp, value);
+        // onChange(entity, targetProp, value);
       } else if (callback) {
         //TODO
         // callback(owner);
@@ -106,12 +106,12 @@ class AutocompleteWidget extends React.Component<Props> {
         //FromProp
         if (owner[targetProp] == null) {
           this.setState({ value: null });
-          onChange(entity, targetProp, null);
+          // onChange(entity, targetProp, null);
         } else {
           let found = options?.find(o => o[fromProp] == entity[targetProp]);
           if (found) {
             this.setState({ value: found });
-            onChange(entity, targetProp, value);
+            // onChange(entity, targetProp, value);
           } else {
             debugger;
             console.log('not found');

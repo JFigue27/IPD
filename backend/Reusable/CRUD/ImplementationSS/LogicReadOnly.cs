@@ -31,7 +31,7 @@ namespace Reusable.CRUD.Implementations.SS
         #region HOOKS
         virtual protected SqlExpression<Entity> OnGetList(SqlExpression<Entity> query)
         {
-            if (EntityInfo is Trackable) query.Where(e => !(e as Trackable).IsDeleted);
+            if (EntityInfo is Trackable) query.Where($"{query.Table<Entity>()}.{query.Column<Trackable>(t => t.IsDeleted)} = FALSE");
             return query;
         }
         virtual protected SqlExpression<Entity> OnGetSingle(SqlExpression<Entity> query)
@@ -429,7 +429,6 @@ namespace Reusable.CRUD.Implementations.SS
             };
 
             #region Apply General Search Filter
-
 
             var filtered = new HashSet<Entity>();
             if (!string.IsNullOrEmpty(generalFilter) || (paramsNotFoundAsProps.Count > 0))

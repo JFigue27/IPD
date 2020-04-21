@@ -63,7 +63,7 @@ class AccountsList extends ListContainer<AccountProps> {
 
     return (
       <NoSsr>
-        <Container style={{ padding: 20 }} maxWidth='xl'>
+        <Container style={{ padding: 20 }} maxWidth='lg'>
           <Grid container direction='row'>
             <Grid item xs />
             <Pagination

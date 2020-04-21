@@ -226,7 +226,6 @@ namespace Reusable.Rest.Implementations.SS
             return AttachmentsIO.getAvatarsFromFolder(request.Directory, request.AttachmentKind);
         }
 
-
     }
 
     [Route("/Attachment", "POST")]

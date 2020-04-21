@@ -38,7 +38,8 @@ class FormContainer<ExtendedProps> extends React.Component<FormProps & ExtendedP
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!this.auth && this.context.auth && this.context.auth.user) {
+    if (!this.auth && this.context.auth && this.context.auth.user && this.context.auth.account) {
+      this.auth = this.context.auth;
       console.log('Refresh after login.');
       if ((this as any).refresh) {
         (this as any).refresh();
@@ -46,7 +47,6 @@ class FormContainer<ExtendedProps> extends React.Component<FormProps & ExtendedP
         this.refreshForm(undefined);
       }
     }
-    this.auth = this.context.auth;
   }
 
   // Service Operations:==========================================================
@@ -541,9 +541,10 @@ class FormContainer<ExtendedProps> extends React.Component<FormProps & ExtendedP
 
   BEFORE_CHECKIN = async (entity: IEntity) => entity;
 
-  ON_CHANGE = (data: any, field?: string, value?: any) => {
+  //Cannot be arrow function becuase inheritance.
+  ON_CHANGE(data: any, field?: string, value?: any) {
     (this.props as any).onChange && (this.props as any).onChange(data, field);
-  };
+  }
 
   ON_DIALOG_CLOSE = (dialogId, feedback) => {
     if ((this as any).refresh && feedback != 'cancel') (this as any).refresh();

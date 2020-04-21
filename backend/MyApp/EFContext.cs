@@ -47,9 +47,7 @@ namespace MyApp.Database
         }
 
         #region App
-        ///start:generated:dbsets<<<
-        public virtual DbSet<Test> Tests { get; set; }
-        ///end:generated:dbsets<<<
+        ///start:generated:dbsets<<<///end:generated:dbsets<<<
         #endregion
 
         #region Reusable

@@ -51,6 +51,7 @@ interface AvatarProps {
   printMode?: boolean;
   afterDelete?: any;
   directUpload?: boolean;
+  avatarStyle?: any;
 }
 
 class AvatarWidget extends Component<AvatarProps> {
@@ -243,7 +244,8 @@ class AvatarWidget extends Component<AvatarProps> {
       listBind = 'Avatars',
       folderBind = 'AvatarFolder',
       printMode,
-      readOnly
+      readOnly,
+      avatarStyle = {}
     } = this.props;
 
     const api = 'api_' + listBind;
@@ -279,11 +281,11 @@ class AvatarWidget extends Component<AvatarProps> {
               <input {...getInputProps()} style={{ display: 'none' }} />
               {firstOne && firstOne.ImageBase64 ? (
                 <ButtonBase onClick={() => this.directRemove(firstOne)}>
-                  <Avatar src={`data:image/png;base64,${firstOne.ImageBase64}`} alt='Avatar' />
+                  <Avatar style={avatarStyle} src={`data:image/png;base64,${firstOne.ImageBase64}`} alt='Avatar' />
                 </ButtonBase>
               ) : (
                 <ButtonBase onClick={this.openDialog}>
-                  <Avatar />
+                  <Avatar style={avatarStyle} />
                 </ButtonBase>
               )}
             </Grid>

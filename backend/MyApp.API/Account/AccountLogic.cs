@@ -91,6 +91,8 @@ namespace MyApp.Logic
                 item.PasswordHash = null;
                 item.UpdatePassword = false;
 
+                item.Avatars = AttachmentsIO.getAvatarsFromFolder(item.AvatarFolder, "Avatar");
+
             }
             return entities.ToList();
         }
@@ -115,6 +117,7 @@ namespace MyApp.Logic
             //Update only these fields:
             Db.Update<Account>(new
             {
+                entity.AvatarFolder,
                 entity.Address,
                 entity.Address2,
                 entity.City,
@@ -179,11 +182,9 @@ namespace MyApp.Logic
             var accountFound = GetAll().FirstOrDefault(a => a.UserName == EmailOrUserName || a.Email == EmailOrUserName);
 
             if (accountFound == null)
-                throw new KnownError("Usuario o Correo no existente.");
-
+                throw new KnownError("User or Password doesn't exist.");
 
             var token = TokenLogic.GetNew("Account", accountFound.Id);
-
 
             var templete = File.ReadAllText("~/../MyApp.Api/".MapHostAbsolutePath().CombineWith("Account/AccountResetPasswd.html"));
             var context = new ScriptContext
@@ -197,7 +198,7 @@ namespace MyApp.Logic
             var emailService = new EmailService
             {
                 // From = Auth.Email, // From appSettings
-                Subject = "Reestablecer Contraseña.",
+                Subject = "Reset Password.",
                 Body = body
             };
 
@@ -217,15 +218,37 @@ namespace MyApp.Logic
         {
             var tokenFound = TokenLogic.GetAll().FirstOrDefault(t => t.Value == token);
             if (tokenFound == null)
-                throw new KnownError("Sesion Invalida.");
+                throw new KnownError("Invalid Sesion.");
 
             if (tokenFound.ExpiresAt < DateTimeOffset.Now)
-                throw new KnownError("Sesion Invalida.");
+                throw new KnownError("Invalid Sesion.");
 
             var accountFound = GetAll().FirstOrDefault(a => a.Id == tokenFound.ForeignKey);
             if (accountFound == null)
-                throw new KnownError("Sesion Invalida.");
+                throw new KnownError("Invalid Sesion.");
 
+            accountFound.UpdatePassword = true;
+
+            accountFound.Password = password;
+            accountFound.ConfirmPassword = confirmPassword;
+            Update(accountFound);
+
+        }
+        public void ResetCurrentPassword(string currentPassword, string password, string confirmPassword)
+        {
+
+            var client = new JsonServiceClient("http://localhost:5000/");
+            client.Post(new Authenticate
+            {
+                provider = CredentialsAuthProvider.Name,
+                UserName = Auth.UserName,
+                Password = currentPassword,
+                RememberMe = false
+            });
+
+            var accountFound = GetAll().FirstOrDefault(a => a.UserName == Auth.UserName);
+            if (accountFound == null)
+                throw new KnownError("Invalid Sesion.");
 
             accountFound.UpdatePassword = true;
 

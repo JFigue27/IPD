@@ -125,6 +125,16 @@ namespace MyApp.API
             });
         }
 
+        [Authenticate]
+        public object Post(ResetCurrentPassword request)
+        {
+            return InTransaction(db =>
+            {
+                Logic.ResetCurrentPassword(request.CurrentPassword, request.Password, request.ConfirmPassword);
+                return new CommonResponse();
+            });
+        }
+
         #endregion
     }
     #region Specific
@@ -143,8 +153,14 @@ namespace MyApp.API
 
         public string ConfirmPassword { get; set; }
     }
+    [Route("/Account/ResetCurrentPassword", "POST")]
+    public class ResetCurrentPassword
+    {
+        public string CurrentPassword { get; set; }
+        public string Password { get; set; }
 
-
+        public string ConfirmPassword { get; set; }
+    }
 
     #endregion
     #region Generic Read Only

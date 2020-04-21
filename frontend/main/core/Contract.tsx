@@ -19,6 +19,7 @@ export interface IUserAuth {
 
 export interface IAuth {
   user?: IUserAuth;
+  account?: any;
 }
 
 export interface IFormState {

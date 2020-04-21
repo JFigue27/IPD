@@ -39,7 +39,6 @@ namespace Reusable.Utils
             startDate = nextOpenDay(startDate);
             endDate = prevOpenDay(endDate);
 
-
             if (startDate > endDate)
                 return 0;
 
@@ -115,12 +114,10 @@ namespace Reusable.Utils
 
         }
 
-
         private List<string> dateListToStringList(IEnumerable<DateTimeOffset> dates)
         {
             return dates.Select(piDate => piDate.ToString(DateFormat)).ToList();
         }
-
 
         private DateTimeOffset prevOpenDay(DateTimeOffset endDate)
         {
@@ -152,9 +149,6 @@ namespace Reusable.Utils
             return date.DayOfWeek != DayOfWeek.Saturday && date.DayOfWeek != DayOfWeek.Sunday &&
                    !_holidays.Contains(date.ToString(DateFormat));
         }
-
-
-
 
         private DateTimeOffset nextOpenDay(DateTimeOffset startDate)
         {

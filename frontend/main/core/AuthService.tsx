@@ -27,8 +27,12 @@ export default class AuthService {
       let response = await request('POST', 'auth/credentials.json?' + data);
       if (!response.ok) throw 'Invalid';
       let userAuth = await response.json();
+      let responseInfoUser = await request('GET', 'Account/' + userAuth.UserId + '.json');
+      if (!responseInfoUser.ok) throw 'Invalid user account';
+      let userInfoAccount = await responseInfoUser.json();
       AuthService.auth = {
-        user: userAuth
+        user: userAuth,
+        account: userInfoAccount
       };
       localStorage.setItem('auth', JSON.stringify(AuthService.auth));
       // AuthService.ON_LOGIN();

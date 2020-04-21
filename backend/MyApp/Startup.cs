@@ -23,6 +23,7 @@ using MyApp.Logic.Entities;
 using ServiceStack.Logging;
 using ServiceStack.Logging.NLogger;
 using ServiceStack.OrmLite.PostgreSQL;
+using Reusable.Attachments;
 
 namespace MyApp
 {
@@ -235,6 +236,7 @@ namespace MyApp
             #endregion
 
             #region App
+            AttachmentsIO.AppSettings = AppSettings;
             // container.Register(c => dbFactory.Open());
             // container.Register(c => c.Resolve<IDbConnectionFactory>().OpenDbConnection()).ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWired<RevisionLogic>().ReusedWithin(ReuseScope.Request);
@@ -247,9 +249,7 @@ namespace MyApp
             container.RegisterAutoWired<AccountLogic>().ReusedWithin(ReuseScope.Request);
 
             // This App:
-            ///start:generated:di<<<
-            container.RegisterAutoWired<TestLogic>().ReusedWithin(ReuseScope.Request);
-            ///end:generated:di<<<
+            ///start:generated:di<<<///end:generated:di<<<
             #endregion
 
             #region Seed Data

@@ -7,6 +7,7 @@ export default class AccountService extends CRUDFactory {
     });
   }
   ADAPTER_IN(entity) {
+    entity.displayValue = entity.UserName;
     entity.ConvertedCreatedDate = entity.CreatedDate ? new Date(entity.CreatedDate) : null;
     entity.ConvertedLastLoginAttempt = entity.LastLoginAttempt ? new Date(entity.LastLoginAttempt) : null;
     entity.ConvertedLockedDate = entity.LockedDate ? new Date(entity.LockedDate) : null;

@@ -53,7 +53,8 @@ namespace Reusable.EmailServices
 
         public void SendMail()
         {
-            if(Client == null) {
+            if (Client == null)
+            {
                 Log.Error($"Mailgun Email was not sent. Check AppSettings. By: [{From}] to:[{To.Join(", ")}] cc:[{Cc.Join(", ")}] bcc:[{Bcc.Join(", ")}] subject: [{Subject}]");
                 return;
             }

@@ -34,23 +34,23 @@ namespace Reusable.EmailServices
             To = new List<string>();
             Cc = new List<string>();
             Bcc = new List<string>();
-
-            From = AppSettings.Get<string>("smtp.from");
-            FromPassword = AppSettings.Get<string>("smtp.password");
-
-            var smtpServer = AppSettings.Get<string>("smtp.server");
-            var smtpPort = AppSettings.Get<string>("smtp.port");
-
-            if (string.IsNullOrWhiteSpace(smtpServer) || string.IsNullOrWhiteSpace(smtpPort))
-                return;
-
-            smtp = new SmtpClient(smtpServer, int.Parse(smtpPort));
         }
 
         public void SendMail()
         {
             try
             {
+                From = AppSettings.Get<string>("smtp.from");
+                FromPassword = AppSettings.Get<string>("smtp.password");
+
+                var smtpServer = AppSettings.Get<string>("smtp.server");
+                var smtpPort = AppSettings.Get<string>("smtp.port");
+
+                if (string.IsNullOrWhiteSpace(smtpServer) || string.IsNullOrWhiteSpace(smtpPort))
+                    return;
+
+                smtp = new SmtpClient(smtpServer, int.Parse(smtpPort));
+
                 smtp.EnableSsl = true;
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtp.UseDefaultCredentials = false;

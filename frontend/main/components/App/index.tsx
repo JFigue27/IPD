@@ -14,7 +14,8 @@ import {
   Tabs,
   Tab,
   createMuiTheme,
-  ThemeProvider
+  ThemeProvider,
+  Avatar
 } from '@material-ui/core';
 import { Button, Icon, Fab, ButtonBase } from '@material-ui/core';
 import Dialog from '../../widgets/Dialog';
@@ -38,17 +39,37 @@ interface IIndexState {
 
 const theme = createMuiTheme({
   palette: {
+    common: {
+      black: '#000',
+      white: '#fff'
+    },
+    background: {
+      paper: '#fff',
+      default: '#fafafa'
+    },
     primary: {
-      light: '#757575',
-      main: '#871707',
-      dark: '#002884',
+      light: 'rgba(159, 69, 56, 1)',
+      main: 'rgba(135, 23, 7, 1)',
+      dark: 'rgba(94, 16, 4, 1)',
       contrastText: '#fff'
     },
     secondary: {
-      light: '#c62828',
-      main: '#c7c7c7',
-      dark: '#ba000d',
+      light: 'rgba(210, 210, 210, 1)',
+      main: 'rgba(199, 199, 199, 1)',
+      dark: 'rgba(139, 139, 139, 1)',
       contrastText: '#fff'
+    },
+    error: {
+      light: '#e57373',
+      main: 'rgba(244, 67, 54, 1)',
+      dark: 'rgba(211, 47, 47, 1)',
+      contrastText: '#fff'
+    },
+    text: {
+      primary: 'rgba(0, 0, 0, 0.87)',
+      secondary: 'rgba(0, 0, 0, 0.54)',
+      disabled: 'rgba(0, 0, 0, 0.38)',
+      hint: 'rgba(0, 0, 0, 0.38)'
     }
     // type: 'dark'
   }
@@ -110,6 +131,7 @@ class App extends React.Component {
       this.setState({ auth: AuthService.auth, globals: { auth: AuthService.auth } });
     });
     this.openLoginDialog();
+    this.handleClose();
   };
 
   toggleDrawer = (side: string, open: boolean) => () => {
@@ -190,14 +212,19 @@ class App extends React.Component {
                 })}
               </Tabs>
               <Button color='inherit' className={classes.button} onClick={this.handleMenu}>
-                <Icon style={{ marginRight: 5 }}>account_circle</Icon>
+                {/* <Icon style={{ marginRight: 5 }}>account_circle</Icon> */}
+                <Avatar
+                  src={`data:image/png;base64,${auth?.account.Avatars[0]?.ImageBase64}`}
+                  style={{ marginRight: 5, width: 30, height: 30 }}
+                />
                 {auth && auth.user && auth.user.UserName}
               </Button>
               <Menu
                 id='menu-appbar'
+                getContentAnchorEl={null}
                 anchorEl={anchorEl}
                 anchorOrigin={{
-                  vertical: 'top',
+                  vertical: 'bottom',
                   horizontal: 'right'
                 }}
                 transformOrigin={{
@@ -207,7 +234,11 @@ class App extends React.Component {
                 open={open}
                 onClose={this.handleClose}
               >
-                {/* <MenuItem onClick={this.handleClose}>Profile</MenuItem> */}
+                <MenuItem>
+                  <Link href={'/edit-profile'}>
+                    <ButtonBase>My Profile</ButtonBase>
+                  </Link>
+                </MenuItem>
                 <MenuItem onClick={this.logout}>Logout</MenuItem>
               </Menu>
             </Toolbar>
