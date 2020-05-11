@@ -20,7 +20,7 @@ interface Props {
   maxWidth?: any;
   dividersOff?: boolean;
   fixed?: boolean;
-  actions?: any;
+  actions?(dialog: DialogWidget): any;
   esc?: boolean;
   children(dialog: DialogWidget);
 }
@@ -45,8 +45,9 @@ class DialogWidget extends React.Component<Props> {
     this.close = this.close.bind(this);
   }
   onOk = () => {}; //To be defined on children
-  close(...args) {
+  close(a) {
     const { opener, id } = this ? (this.props as any) : { opener: undefined, id: undefined };
+    const args = Array.prototype.slice.call(arguments);
     if (opener) opener.closeDialog(id, ...args);
   }
 
@@ -68,7 +69,6 @@ class DialogWidget extends React.Component<Props> {
     } = this.props;
 
     // this.close = opener ? opener.closeDialog.bind(null, id, 'cancel') : this.close;
-
     return (
       <Dialog
         fullScreen={fullScreen}
@@ -84,8 +84,8 @@ class DialogWidget extends React.Component<Props> {
           {children(this)}
         </DialogContent>
 
-        {!actionsOff &&
-          (actions || (
+        {(actions && actions(this)) ||
+          (!actionsOff && (
             <DialogActions>
               <Button onClick={() => this.close('cancel')} color='primary'>
                 Close

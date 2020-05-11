@@ -56,6 +56,7 @@ namespace MyApp.Database
         public virtual DbSet<Field> CatalogDefinitionFields { get; set; }
         public virtual DbSet<CatalogFieldValue> CatalogFieldValues { get; set; }
         public virtual DbSet<Revision> Revisions { get; set; }
+        public virtual DbSet<Token> Tokens { get; set; }
         #endregion
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

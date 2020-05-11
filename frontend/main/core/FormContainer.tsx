@@ -40,11 +40,14 @@ class FormContainer<ExtendedProps> extends React.Component<FormProps & ExtendedP
   componentDidUpdate(prevProps, prevState) {
     if (!this.auth && this.context.auth && this.context.auth.user && this.context.auth.account) {
       this.auth = this.context.auth;
-      console.log('Refresh after login.');
-      if ((this as any).refresh) {
-        (this as any).refresh();
-      } else {
-        this.refreshForm(undefined);
+      if (CRUDFactory.RefreshAfterLogin) {
+        CRUDFactory.RefreshAfterLogin = false;
+        console.log('Refresh after login.');
+        if ((this as any).refresh) {
+          (this as any).refresh();
+        } else {
+          this.refreshForm(undefined);
+        }
       }
     }
   }
@@ -55,7 +58,7 @@ class FormContainer<ExtendedProps> extends React.Component<FormProps & ExtendedP
     return await this.refreshForm(undefined);
   };
 
-  refreshForm = async criteriaParam => {
+  refreshForm = async (criteriaParam?: any) => {
     let criteria = criteriaParam === undefined ? this.criteria : criteriaParam;
     console.log('Form criteria: ' + criteria);
 
@@ -129,7 +132,7 @@ class FormContainer<ExtendedProps> extends React.Component<FormProps & ExtendedP
     if (event) event.stopPropagation();
     if (confirm(`Please confirm to create a new ${this.service.EndPoint}`)) {
       return await this.service.CreateAndCheckout(item).then(baseEntity => {
-        this.AFTER_CREATE(baseEntity);
+        this.AFTER_SAVE(baseEntity);
         this.setState({ baseEntity, isDisabled: false });
         this.success('Created and Checked Out.');
         return baseEntity;
@@ -187,27 +190,29 @@ class FormContainer<ExtendedProps> extends React.Component<FormProps & ExtendedP
 
   onAttachmentsChange = (files, listBind, folderBind, targetFolder, directUpload, kind) => {
     let { baseEntity } = this.state;
-    if (files && listBind) {
-      baseEntity[listBind] = [...files];
-    }
+    // if (files && listBind) {
+    //   baseEntity[listBind] = [...files];
+    // }
 
-    if (targetFolder && folderBind) {
-      baseEntity[folderBind] = baseEntity[folderBind] || targetFolder;
-    }
+    // if (targetFolder && folderBind) {
+    //   baseEntity[folderBind] = baseEntity[folderBind] || targetFolder;
+    // }
 
-    if (directUpload) {
-      baseEntity['api_' + listBind].uploadFiles(files).then(owner => {
-        return this.service.CustomGet(`Attachment/GetAvatarFromFolder/${kind}/${owner[folderBind]}.json`).then(response => {
-          baseEntity[listBind] = response;
-          this.setState({ baseEntity });
-          return baseEntity;
-        });
-      });
-    } else {
-      this.setState({ baseEntity });
+    // if (directUpload) {
+    //   debugger;
+    //   return baseEntity['api_' + listBind].uploadFiles(files).then(owner => {
+    //     debugger;
+    //     // return this.service.CustomGet(`Attachment/GetAvatarFromFolder/${kind}/${owner[folderBind]}.json`).then(response => {
+    //     //   baseEntity[listBind] = response;
+    //     //   this.setState({ baseEntity });
+    //     return baseEntity;
+    //     // });
+    //   });
+    // } else {
+    //   this.setState({ baseEntity });
 
-      return baseEntity;
-    }
+    //   return baseEntity;
+    // }
 
     this.setState({ baseEntity });
 
@@ -342,19 +347,22 @@ class FormContainer<ExtendedProps> extends React.Component<FormProps & ExtendedP
     return this.dialogPromise;
   };
 
-  closeDialog = (propId, feedback) => {
+  closeDialog(dialogId, feedback) {
     this.setState({
-      [propId]: false
+      [dialogId]: false
     });
 
-    this.ON_DIALOG_CLOSE(propId, feedback);
+    let args = Array.prototype.slice.call(arguments);
+    args.splice(0, 2);
+
+    this.ON_DIALOG_CLOSE(dialogId, feedback, args);
 
     if (feedback && feedback != 'cancel') {
-      this.resolveDialogPromise({ propId, feedback });
+      this.resolveDialogPromise({ dialogId, feedback, args });
     } else {
-      this.rejectDialogPromise({ propId, feedback });
+      this.rejectDialogPromise({ dialogId, feedback });
     }
-  };
+  }
 
   // Local Operations:============================================================
   handleInputChange: any = (event, field) => {
@@ -475,16 +483,16 @@ class FormContainer<ExtendedProps> extends React.Component<FormProps & ExtendedP
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
   }
 
-  success = (message, autoHideDuration = 700) => {
+  success = (message, autoHideDuration = 1200) => {
     (this.props as any).enqueueSnackbar(message, { variant: 'success', autoHideDuration });
   };
   error = (message, autoHideDuration = 3000) => {
     (this.props as any).enqueueSnackbar(message, { variant: 'error', autoHideDuration });
   };
-  info = (message, autoHideDuration = 700) => {
+  info = (message, autoHideDuration = 1200) => {
     (this.props as any).enqueueSnackbar(message, { variant: 'info', autoHideDuration });
   };
-  message = (message, autoHideDuration = 700) => {
+  message = (message, autoHideDuration = 1200) => {
     (this.props as any).enqueueSnackbar(message, { autoHideDuration });
   };
 
@@ -533,7 +541,7 @@ class FormContainer<ExtendedProps> extends React.Component<FormProps & ExtendedP
 
   _afterSave = entity => {
     const { dialog } = this.props as any;
-    if (dialog) dialog.close('ok');
+    if (dialog) dialog.close('ok', entity);
   };
   AFTER_SAVE = entity => {};
 
@@ -546,10 +554,12 @@ class FormContainer<ExtendedProps> extends React.Component<FormProps & ExtendedP
     (this.props as any).onChange && (this.props as any).onChange(data, field);
   }
 
-  ON_DIALOG_CLOSE = (dialogId, feedback) => {
-    if ((this as any).refresh && feedback != 'cancel') (this as any).refresh();
-    console.log(dialogId, feedback);
-  };
+  ON_DIALOG_CLOSE(dialogId, feedback, args) {
+    if ((this as any).refresh && feedback != 'cancel') {
+      (this as any).refresh();
+    }
+    console.log(dialogId, feedback, args);
+  }
 
   render(): JSX.Element {
     return <></>;

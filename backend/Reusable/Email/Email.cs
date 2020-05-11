@@ -45,13 +45,14 @@ namespace Reusable.EmailServices
 
                 var smtpServer = AppSettings.Get<string>("smtp.server");
                 var smtpPort = AppSettings.Get<string>("smtp.port");
+                var smtpSSL = AppSettings.Get("smtp.ssl", true);
 
                 if (string.IsNullOrWhiteSpace(smtpServer) || string.IsNullOrWhiteSpace(smtpPort))
                     return;
 
                 smtp = new SmtpClient(smtpServer, int.Parse(smtpPort));
 
-                smtp.EnableSsl = true;
+                smtp.EnableSsl = smtpSSL;
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtp.UseDefaultCredentials = false;
                 smtp.Credentials = new System.Net.NetworkCredential(From, FromPassword);

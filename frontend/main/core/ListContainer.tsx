@@ -24,6 +24,7 @@ const storageSufixx = 'main';
 
 class ListContainer<ExtendedProps> extends FormContainer<ListProps & ExtendedProps> {
   debouncedRefresh: any = null;
+  debouncedLocalRefresh: any = null;
   staticQueryParams: any;
   customLoad: any = null;
   tableRef: any = null;
@@ -49,6 +50,7 @@ class ListContainer<ExtendedProps> extends FormContainer<ListProps & ExtendedPro
     super(props, config);
     if (config) Object.assign(this.state, config);
     this.debouncedRefresh = debounce(this.refresh, 250);
+    this.debouncedLocalRefresh = debounce(this.localFilter, 100);
   }
 
   bindFilterInput = event => {
@@ -209,6 +211,8 @@ class ListContainer<ExtendedProps> extends FormContainer<ListProps & ExtendedPro
         });
 
         this.updating = false;
+
+        return baseList;
       })
       .catch(e => {
         console.log(e);
@@ -312,11 +316,41 @@ class ListContainer<ExtendedProps> extends FormContainer<ListProps & ExtendedPro
     if (confirm(`Please confirm to create a new ${this.service.EndPoint}`)) {
       this.setState({ isLoading: true });
       return await this.service.CreateAndCheckout(item).then(entity => {
-        this.AFTER_CREATE_AND_CHECKOUT(entity);
+        this.AFTER_SAVE(entity);
         console.log('success');
         this.setState({ isLoading: false });
         return entity;
       });
+    }
+  };
+
+  bindLocalFilter = event => {
+    const { filterOptions } = this.state;
+    filterOptions[event.target.name] = event.target.value;
+    this.ON_FILTER_CHANGE(filterOptions, event.target.name);
+    this.persistFilter(filterOptions);
+    this.debouncedLocalRefresh();
+  };
+
+  localFilter = () => {
+    const { baseList, filterOptions } = this.state;
+    let criteria = filterOptions.filterGeneral;
+    if (criteria) {
+      this.setState({
+        baseList: baseList.filter(item => {
+          if (typeof item == 'string') {
+            return item.search(new RegExp(criteria, 'gi')) > -1;
+          } else {
+            return Object.getOwnPropertyNames(item).some(prop => {
+              if (typeof item[prop] == 'string') {
+                return item[prop].search(new RegExp(criteria, 'gi')) > -1;
+              }
+            });
+          }
+        })
+      });
+    } else {
+      this.refresh();
     }
   };
 
@@ -355,7 +389,7 @@ class ListContainer<ExtendedProps> extends FormContainer<ListProps & ExtendedPro
   };
 
   getSelectedCount = () => {
-    throw 'Not Implemented';
+    return this.state.baseList.filter(e => e.selected).length;
   };
 
   clear = () => {
@@ -383,46 +417,46 @@ class ListContainer<ExtendedProps> extends FormContainer<ListProps & ExtendedPro
   handleDateChange = (date, field, currentIndex, arrRows = this.state.baseList) => {
     arrRows[currentIndex][field] = date ? date.toDate() : null;
     arrRows[currentIndex].Entry_State = EntryState.Upserted;
-    this.onInputChange();
+    this.onInputChange(field);
   };
 
   handleInputChange = (event, field, currentIndex, arrRows = this.state.baseList) => {
     arrRows[currentIndex][field] = event.target.value;
     arrRows[currentIndex].Entry_State = EntryState.Upserted;
-    this.onInputChange();
+    this.onInputChange(field);
   };
 
   handleInputChangeId = (event, field, currentIndex, arrRows = this.state.baseList) => {
     arrRows[currentIndex][field] = event.target.value;
     arrRows[currentIndex].Entry_State = EntryState.Upserted;
-    this.onInputChange();
+    this.onInputChange(field);
   };
 
   handleAutocompleteChange = (value, field, currentIndex, arrRows = this.state.baseList) => {
     arrRows[currentIndex][field] = value.label;
     arrRows[currentIndex].Entry_State = EntryState.Upserted;
-    this.onInputChange();
+    this.onInputChange(field);
   };
 
   handleAutocompleteChangeId = (value, field, currentIndex, arrRows = this.state.baseList) => {
     arrRows[currentIndex][field] = value.Id;
     arrRows[currentIndex].Entry_State = EntryState.Upserted;
-    this.onInputChange();
+    this.onInputChange(field);
   };
 
   handleCheckBoxChange = (event, field, currentIndex, arrRows = this.state.baseList) => {
     arrRows[currentIndex][field] = event.target.checked;
     arrRows[currentIndex].Entry_State = EntryState.Upserted;
-    this.onInputChange();
+    this.onInputChange(field);
   };
 
   handleToggleListItem = (field, currentIndex, arrRows = this.state.baseList) => {
     arrRows[currentIndex][field] = !arrRows[currentIndex][field];
     arrRows[currentIndex].Entry_State = EntryState.Upserted;
-    this.onInputChange();
+    this.onInputChange(field);
   };
 
-  onInputChange = (arrRows = this.state.baseList) => {
+  onInputChange = (field?: string, arrRows = this.state.baseList) => {
     let atLeastOneFilled = false;
     if (this.state.autoAdd && arrRows.length > 0) {
       let lastRow = arrRows[arrRows.length - 1];
@@ -438,11 +472,11 @@ class ListContainer<ExtendedProps> extends FormContainer<ListProps & ExtendedPro
       }
     }
 
-    this.ON_CHANGE(arrRows);
+    this.ON_CHANGE(arrRows, field);
     if (atLeastOneFilled && this.state.autoAdd) arrRows.push({});
 
     this.setState({
-      baseList: arrRows
+      baseList: [...arrRows]
     });
   };
 
@@ -521,8 +555,6 @@ class ListContainer<ExtendedProps> extends FormContainer<ListProps & ExtendedPro
   ON_OPEN_ITEM = entity => {};
 
   AFTER_CREATE = instance => {};
-
-  AFTER_CREATE_AND_CHECKOUT = entity => {};
 
   AFTER_REMOVE = entity => {};
 

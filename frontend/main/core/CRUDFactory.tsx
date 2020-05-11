@@ -30,7 +30,8 @@ const GeneralError = response => {
   else {
     switch (response.status) {
       case 401:
-        AuthService.OpenLogin();
+        CRUDFactory.RefreshAfterLogin = true;
+        AuthService.RequestLogin();
         throw 'Your session has expired. Log in again';
     }
   }
@@ -82,6 +83,7 @@ interface IConfigCRUDFactory {
 export class CRUDFactory {
   EndPoint: string;
   BaseURL: string;
+  static RefreshAfterLogin: boolean = false;
 
   constructor({ EndPoint, BaseURL = AppConfig.BaseURL }: IConfigCRUDFactory) {
     this.EndPoint = EndPoint;

@@ -36,6 +36,7 @@ export default class AuthService {
       };
       localStorage.setItem('auth', JSON.stringify(AuthService.auth));
       // AuthService.ON_LOGIN();
+      AuthService.ResolveLoginPromise(AuthService.auth);
       return AuthService.auth;
     } catch (e) {
       console.log(e);
@@ -54,4 +55,13 @@ export default class AuthService {
   static ON_LOGIN = () => {};
 
   static OpenLogin = () => {};
+
+  private static ResolveLoginPromise(result: any) {}
+
+  static RequestLogin = async () => {
+    AuthService.OpenLogin();
+    return new Promise((resolve, reject) => {
+      AuthService.ResolveLoginPromise = resolve;
+    });
+  };
 }

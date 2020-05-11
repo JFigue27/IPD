@@ -106,7 +106,7 @@ class App extends React.Component {
     AuthService.fillAuthData();
     AuthService.OpenLogin = this.openLoginDialog;
     if (!AuthService.auth) {
-      AuthService.OpenLogin();
+      AuthService.RequestLogin();
     }
 
     let currentPath = window.location.pathname;
@@ -192,7 +192,7 @@ class App extends React.Component {
           {() => <Login onCloseLogin={this.closeLoginDialog} />}
         </Dialog>
         {!fullscreen && (
-          <AppBar position='fixed' className='MainAppBar app-nav'>
+          <AppBar position='fixed' className='MainAppBar app-nav' elevation={0}>
             <Toolbar>
               {/* <IconButton color='inherit' onClick={this.toggleDrawer('right', true)}>
               <Icon>menu</Icon>
@@ -214,7 +214,7 @@ class App extends React.Component {
               <Button color='inherit' className={classes.button} onClick={this.handleMenu}>
                 {/* <Icon style={{ marginRight: 5 }}>account_circle</Icon> */}
                 <Avatar
-                  src={`data:image/png;base64,${auth?.account.Avatars[0]?.ImageBase64}`}
+                  src={`data:image/png;base64,${auth?.account?.Avatars.length > 0 ? auth?.account.Avatars[0]?.ImageBase64 : null}`}
                   style={{ marginRight: 5, width: 30, height: 30 }}
                 />
                 {auth && auth.user && auth.user.UserName}
@@ -249,7 +249,7 @@ class App extends React.Component {
             <div style={{ width: 200 }}>Content</div>
           </div>
         </Drawer> */}
-        <SnackbarProvider autoHideDuration={700} anchorOrigin={{ vertical: 'top', horizontal: 'right' }} maxSnack={4}>
+        <SnackbarProvider autoHideDuration={1200} anchorOrigin={{ vertical: 'top', horizontal: 'right' }} maxSnack={4}>
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <GlobalContext.Provider value={this.state.globals}>
               <Grid

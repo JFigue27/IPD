@@ -14,7 +14,7 @@ import AppConfig from '../../core/AppConfig';
 
 const service = new AccountService();
 const defaultConfig = {
-  service,
+  service
 };
 
 const Request = async (method: string, endpoint: string, data: any, BaseURL?: string) => {
@@ -23,9 +23,9 @@ const Request = async (method: string, endpoint: string, data: any, BaseURL?: st
     mode: 'cors',
     // cache: 'no-cache',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    body: null,
+    body: null
   };
   if (['POST', 'PUT', 'DELETE'].includes(method)) config.body = JSON.stringify(data);
   let response = await fetch((BaseURL || AppConfig.BaseURL) + endpoint, config);
@@ -60,7 +60,7 @@ class AccountForm extends FormContainer<AccountProps> {
 
   handleSubmit = event => {
     event.preventDefault();
-    Request('POST','Account/EmailForgotPassword', this.state.baseEntity).then(() => {
+    Request('POST', 'Account/EmailForgotPassword', this.state.baseEntity).then(() => {
       console.log('Done');
       this.navigateTo('/afterforgot-password');
     });

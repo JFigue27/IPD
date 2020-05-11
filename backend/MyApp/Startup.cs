@@ -247,6 +247,7 @@ namespace MyApp
             container.RegisterAutoWired<FieldLogic>().ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWired<CatalogFieldValueLogic>().ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWired<AccountLogic>().ReusedWithin(ReuseScope.Request);
+            container.RegisterAutoWired<TokenLogic>().ReusedWithin(ReuseScope.Request);
 
             // This App:
             ///start:generated:di<<<///end:generated:di<<<

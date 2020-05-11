@@ -42,8 +42,8 @@ class AutocompleteWidget extends React.Component<Props> {
   };
 
   shouldComponentUpdate(nextProps, nextState) {
-    const { options: nextOptions, owner: nextOwner } = nextProps;
-    const { options, owner, targetProp, flat, fromProp = 'Value' } = this.props;
+    const { options: nextOptions, owner: nextOwner, disabled: nextDisabled } = nextProps;
+    const { options, owner, targetProp, flat, fromProp = 'Value', disabled } = this.props;
 
     const { value: nextValue } = nextState;
     const { value } = this.state;
@@ -64,6 +64,10 @@ class AutocompleteWidget extends React.Component<Props> {
         return true;
       }
     } else if (fromProp && nextOwner && nextValue && nextValue[fromProp] != nextOwner[targetProp]) {
+      return true;
+    }
+
+    if(disabled != nextDisabled) {
       return true;
     }
 
@@ -113,7 +117,6 @@ class AutocompleteWidget extends React.Component<Props> {
             this.setState({ value: found });
             // onChange(entity, targetProp, value);
           } else {
-            debugger;
             console.log('not found');
           }
         }
@@ -137,7 +140,7 @@ class AutocompleteWidget extends React.Component<Props> {
         options={options || []}
         value={value}
         onChange={this._onChange}
-        renderInput={params => <TextField {...params} label={label} fullWidth autoComplete='off' />}
+        renderInput={params => <TextField {...params} label={label} fullWidth autoComplete='off' style={{marginBottom: 4, marginTop: 4}} />}
         disabled={disabled}
         autoSelect={autoSelect}
         autoHighlight

@@ -44,6 +44,8 @@ interface AttachmentsProps {
   readOnly?: boolean;
   printMode?: boolean;
   afterDelete?: any;
+  directUpload?: boolean;
+  afterUpload?(): any;
 }
 
 class Attachments extends Component<AttachmentsProps> {
@@ -64,6 +66,7 @@ class Attachments extends Component<AttachmentsProps> {
   updateFiles = from => {
     let files = [...from];
     this.setState({ files });
+    return files;
   };
 
   componentDidMount() {
@@ -99,8 +102,25 @@ class Attachments extends Component<AttachmentsProps> {
     // }
   }
 
+  _onChange = async files => {
+    let { owner = {}, kind = '', onChange, listBind = 'Attachments', folderBind = 'AttachmentsFolder', directUpload } = this.props;
+    let { targetFolder } = this.state as any;
+
+    let statedFiles = this.updateFiles(files);
+
+    owner[listBind] = statedFiles;
+
+    if (targetFolder) {
+      owner[folderBind] = owner[folderBind] || targetFolder;
+    }
+
+    if (directUpload) await this.uploadFiles();
+
+    if (onChange) onChange(files, listBind, folderBind, targetFolder, directUpload, kind);
+  };
+
   onFilesAdded = addedFiles => {
-    let { kind = '', onChange, listBind = 'Attachments' } = this.props;
+    let { kind = '' } = this.props;
     let { files, targetFolder } = this.state as any;
 
     let adaptedAddedFiles = addedFiles.map(file => {
@@ -112,39 +132,35 @@ class Attachments extends Component<AttachmentsProps> {
     });
 
     files = [...files, ...adaptedAddedFiles];
-    this.updateFiles(files);
 
-    if (onChange) onChange(files, listBind);
+    this._onChange(files);
   };
 
   uploadFiles = async () => {
-    const { owner, listBind = 'Attachments', folderBind = 'AttachmentsFolder', onChange } = this.props;
+    const { owner, afterUpload } = this.props;
     let { files } = this.state as any;
 
-    this.setState({ uploading: true });
-
     let filesToUpload = files.filter(file => file.isForUpload);
-    try {
-      for (let [index] of filesToUpload.entries()) {
-        await this.sendRequest(index, filesToUpload);
+    if (filesToUpload.length > 0) {
+      this.setState({ uploading: true });
+      try {
+        for (let [index] of filesToUpload.entries()) {
+          files = await this.sendRequest(filesToUpload[index]);
+        }
+
+        if (afterUpload) await afterUpload();
+      } catch (e) {
+        console.log(e);
+        alert(JSON.stringify(e, null, 3));
+      } finally {
+        this.setState({ uploading: false });
       }
-
-      files = [...this.state.files];
-      let { targetFolder } = this.state;
-
-      if (onChange) return onChange(files, listBind, folderBind, targetFolder);
-
-      return owner;
-    } catch (e) {
-      console.log(e);
-      alert(JSON.stringify(e, null, 3));
-    } finally {
-      this.setState({ uploading: false });
     }
+
+    return owner;
   };
 
-  sendRequest = (index, arrToUpload) => {
-    let file = arrToUpload[index];
+  sendRequest = async file => {
     let { files, targetFolder } = this.state;
 
     const formData = new FormData();
@@ -152,24 +168,28 @@ class Attachments extends Component<AttachmentsProps> {
     formData.append('AttachmentKind', this.Kind);
     formData.append('TargetFolder', targetFolder);
 
-    return Request('POST', 'Attachment.json', formData)
-      .then(response => {
-        let updatedFile;
-        let updatedFiles = files.map((f: any) => {
-          if (f.FileName == file.FileName) {
-            updatedFile = { ...f };
-            updatedFile.isForUpload = false;
-            return updatedFile;
-          }
-          return f;
-        });
-        if (targetFolder != response.Directory) {
-          this.setState({ targetFolder: response.Directory });
+    try {
+      let response = await Request('POST', 'Attachment.json', formData);
+
+      let updatedFile;
+      let updatedFiles = files.map((f: any) => {
+        if (f.FileName == file.FileName) {
+          updatedFile = { ...f };
+          updatedFile.isForUpload = false;
+          return updatedFile;
         }
-        this.updateFiles(updatedFiles);
-        return updatedFile;
-      })
-      .catch(() => (file.status = 'error'));
+        return f;
+      });
+
+      if (targetFolder != response.Directory) {
+        this.setState({ targetFolder: response.Directory });
+      }
+
+      this._onChange(updatedFiles);
+      return updatedFiles;
+    } catch {
+      return (file.status = 'error');
+    }
   };
 
   openDialog = () => {
@@ -178,9 +198,9 @@ class Attachments extends Component<AttachmentsProps> {
   };
 
   removeFile = (file, index) => {
-    const { listBind = 'Attachments', onChange } = this.props;
     let { files } = this.state;
     let updatedFiles;
+
     if (file.isForUpload) updatedFiles = files.filter((f, i) => i != index);
     else
       updatedFiles = files.map((f: any, i: number) => {
@@ -192,13 +212,12 @@ class Attachments extends Component<AttachmentsProps> {
         return f;
       });
 
-    this.updateFiles(updatedFiles);
-    if (onChange) onChange(updatedFiles, listBind);
+    this._onChange(updatedFiles);
   };
 
   cancelRemove = (file, index) => {
-    const { listBind = 'Attachments', onChange } = this.props;
     let { files } = this.state as any;
+
     let updatedFiles = files.map((f, i) => {
       if (i == index) {
         let updatedFile = { ...f };
@@ -207,22 +226,13 @@ class Attachments extends Component<AttachmentsProps> {
       }
       return f;
     });
-    this.updateFiles(updatedFiles);
-    if (onChange) onChange(updatedFiles, listBind);
+
+    this._onChange(updatedFiles);
   };
 
   render() {
     let { files } = this.state as any;
-    let {
-      owner = {},
-      kind = '',
-      onChange,
-      afterDelete,
-      listBind = 'Attachments',
-      folderBind = 'AttachmentsFolder',
-      printMode,
-      readOnly
-    } = this.props;
+    let { owner = {}, kind = '', listBind = 'Attachments', printMode, readOnly } = this.props;
 
     const api = 'api_' + listBind;
     owner[api] = {};

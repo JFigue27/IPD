@@ -13,7 +13,7 @@ import AccountService from './account.service';
 
 const service = new AccountService();
 const defaultConfig = {
-  service,
+  service
 };
 
 interface AccountProps extends FormProps {}
