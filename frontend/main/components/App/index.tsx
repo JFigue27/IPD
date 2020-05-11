@@ -201,7 +201,7 @@ class App extends React.Component {
                 <ButtonBase>
                   <img src='/static/images/Molex_Red.png' alt='Logo Molex' style={{ width: 100, margin: 5 }} />
                   <Typography variant='h6' color='inherit' style={{ margin: 5, marginTop: 9 }}>
-                   - Doc-Control
+                    - Doc-Control
                   </Typography>
                 </ButtonBase>
               </Link>
@@ -237,10 +237,14 @@ class App extends React.Component {
               >
                 <MenuItem>
                   <Link href={'/edit-profile'}>
-                    <ButtonBase>My Profile</ButtonBase>
+                    <ButtonBase>
+                      <Icon style={{ marginRight: 5 }}>account_circle</Icon> My Profile
+                    </ButtonBase>
                   </Link>
                 </MenuItem>
-                <MenuItem onClick={this.logout}>Logout</MenuItem>
+                <MenuItem onClick={this.logout}>
+                  <Icon style={{ marginRight: 5 }}>exit_to_app</Icon>Logout
+                </MenuItem>
               </Menu>
             </Toolbar>
           </AppBar>

@@ -1,0 +1,42 @@
+Name: home
+Type: 
+Entity: Home
+Layout: 
+  - container md:
+      - row start:
+          - 12 8:
+              - row space-between baseline MainHeader:
+                  - h4: What do you need to do? | encode
+                  - 12 4 text-right:
+                      - button outlined: this.navigateTo('/') as Create New Document
+              - list:
+                  - list-item: Procedure
+                    onClick: this.navigateTo('/')
+                  - list-item: ITJ
+                    onClick: this.navigateTo('/')
+                  - list-item: Spec
+                    onClick: this.navigateTo('/')
+                  - list-item:
+                      - list-item-text: More Functions
+                      - iif this.state['collapse']:
+                          - icon: add_circle
+                          - icon: remove_circle
+                    onClick: this.toggle('collapse')
+                  - collapse:
+                      - list:
+                          - list-item: Test 1
+                            onClick: this.navigateTo('/')
+                            icon: account_balance
+                          - list-item: Test 2
+                            onClick: this.navigateTo('/')
+                            icon: thumb_up_alt
+                          - list-item: Test 3
+                            onClick: this.navigateTo('/')
+                            icon: poll
+                          - list-item: Test 4
+                            onClick: this.navigateTo('/')
+                            icon: insert_drive_file
+                          - list-item: Test 5
+                            onClick: this.navigateTo('/')
+                            icon: notifications
+Slots: {}
