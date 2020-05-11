@@ -34,13 +34,16 @@ const Login = props => {
           <form onSubmit={login}>
             <CardContent>
               <Typography style={{ margin: '40px 5px' }} variant='h4' align='center' color='inherit'>
-              main
+                Doc-Control
               </Typography>
-              {/* <div className="finger">
-                <Fingerprint style={{ fontSize: 80 }} />
-              </div> */}
+              <Typography align='center'>
+                <img src='./static/images/Molex_Red.png' alt='Logo Molex' style={{ width: 150, paddingTop: 0 }} />
+              </Typography>
+              <div className='finger'>
+                <Fingerprint style={{ fontSize: 60 }} />
+              </div>
               <div className='text-field'>
-                <TextField required fullWidth label='User' margin='normal' onChange={event => setUsername(event.target.value)} />
+                <TextField required fullWidth label='User Name' margin='normal' onChange={event => setUsername(event.target.value)} />
               </div>
               <div className='text-field'>
                 <TextField
@@ -60,6 +63,11 @@ const Login = props => {
                   Login
                 </Fab>
               </div>
+              <Link href={'http://jucvwdoccnl01/Auth2/forgot-password'}>
+                <Typography align='center' style={{ cursor: 'pointer' }}>
+                  Forgot your password?
+                </Typography>
+              </Link>
             </CardContent>
           </form>
         </Card>

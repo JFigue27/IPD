@@ -45,18 +45,18 @@ const theme = createMuiTheme({
     },
     background: {
       paper: '#fff',
-      default: '#fafafa'
+      default: 'rgba(66, 66, 66, 1)'
     },
     primary: {
-      light: 'rgba(159, 69, 56, 1)',
-      main: 'rgba(135, 23, 7, 1)',
-      dark: 'rgba(94, 16, 4, 1)',
+      light: 'rgba(77, 77, 77, 1)',
+      main: 'rgba(0, 0, 0, 1)',
+      dark: 'rgba(23, 23, 23, 1)',
       contrastText: '#fff'
     },
     secondary: {
-      light: 'rgba(210, 210, 210, 1)',
-      main: 'rgba(199, 199, 199, 1)',
-      dark: 'rgba(139, 139, 139, 1)',
+      light: 'rgba(255, 51, 51, 1)',
+      main: 'rgba(255, 0, 0, 1)',
+      dark: 'rgba(178, 0, 0, 1)',
       contrastText: '#fff'
     },
     error: {
@@ -176,7 +176,7 @@ class App extends React.Component {
           `}
         </style>
         <Head>
-          <title>main</title>
+          <title>Molex-Doc-Control</title>
           <meta charSet='utf-8' />
           <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no' />
           <meta name='format-detection' content='telephone=no' />
@@ -199,8 +199,9 @@ class App extends React.Component {
             </IconButton> */}
               <Link href={'/'}>
                 <ButtonBase>
-                  <Typography variant='h6' color='inherit'>
-                    main
+                  <img src='/static/images/Molex_Red.png' alt='Logo Molex' style={{ width: 100, margin: 5 }} />
+                  <Typography variant='h6' color='inherit' style={{ margin: 5, marginTop: 9 }}>
+                   - Doc-Control
                   </Typography>
                 </ButtonBase>
               </Link>
@@ -214,7 +215,7 @@ class App extends React.Component {
               <Button color='inherit' className={classes.button} onClick={this.handleMenu}>
                 {/* <Icon style={{ marginRight: 5 }}>account_circle</Icon> */}
                 <Avatar
-                  src={`data:image/png;base64,${auth?.account?.Avatars.length > 0 ? auth?.account.Avatars[0]?.ImageBase64 : null}`}
+                  src={`data:image/png;base64,${auth?.account?.Avatars?.length > 0 ? auth?.account.Avatars[0]?.ImageBase64 : null}`}
                   style={{ marginRight: 5, width: 30, height: 30 }}
                 />
                 {auth && auth.user && auth.user.UserName}

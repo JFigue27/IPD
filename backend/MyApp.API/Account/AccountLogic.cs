@@ -182,7 +182,7 @@ namespace MyApp.Logic
             var accountFound = GetAll().FirstOrDefault(a => a.UserName == EmailOrUserName || a.Email == EmailOrUserName);
 
             if (accountFound == null)
-                throw new KnownError("User or Password doesn't exist.");
+                throw new KnownError("User or Password doesn't exist");
 
             var token = TokenLogic.GetNew("Account", accountFound.Id);
 
