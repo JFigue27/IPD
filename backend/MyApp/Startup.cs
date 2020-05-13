@@ -250,7 +250,9 @@ namespace MyApp
             container.RegisterAutoWired<TokenLogic>().ReusedWithin(ReuseScope.Request);
 
             // This App:
-            ///start:generated:di<<<///end:generated:di<<<
+            ///start:generated:di<<<
+            container.RegisterAutoWired<MDCLogic>().ReusedWithin(ReuseScope.Request);
+            ///end:generated:di<<<
             #endregion
 
             #region Seed Data

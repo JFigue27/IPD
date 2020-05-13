@@ -1,8 +1,8 @@
 import App from '../components/App';
-import Home from '../components/Home/home';
+import Mdcs from '../components/MDC/mdcs';
 
 export default () => (
   <App>
-    <Home />
+    <Mdcs />
   </App>
 );

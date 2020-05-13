@@ -135,6 +135,145 @@ namespace MyApp.Migrations
                     b.ToTable("catalog_field");
                 });
 
+            modelBuilder.Entity("MyApp.Logic.Entities.MDC", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Approvers")
+                        .HasColumnName("approvers")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AssignedBy")
+                        .HasColumnName("assigned_by")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AssignedTo")
+                        .HasColumnName("assigned_to")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CheckedoutBy")
+                        .HasColumnName("checkedout_by")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Comments")
+                        .HasColumnName("comments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ControlNumber")
+                        .HasColumnName("control_number")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnName("created_at")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnName("created_by")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DepartmentArea")
+                        .HasColumnName("department_area")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DocumentStatus")
+                        .HasColumnName("document_status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DucumentTitle")
+                        .HasColumnName("ducument_title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnName("is_deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Owner")
+                        .HasColumnName("owner")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProcessType")
+                        .HasColumnName("process_type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("RemovedAt")
+                        .HasColumnName("removed_at")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("RemovedBy")
+                        .HasColumnName("removed_by")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RevisionMessage")
+                        .HasColumnName("revision_message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnName("RowVersion")
+                        .HasColumnType("rowversion");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnName("updated_at")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnName("updated_by")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UsedAt")
+                        .HasColumnName("used_at")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Value")
+                        .HasColumnName("value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id")
+                        .HasName("pk_md_cs");
+
+                    b.ToTable("md_c");
+                });
+
+            modelBuilder.Entity("MyApp.Logic.Entities.Token", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnName("created_at")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset?>("ExpiresAt")
+                        .HasColumnName("expires_at")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<long>("ForeignKey")
+                        .HasColumnName("foreign_key")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ForeignType")
+                        .HasColumnName("foreign_type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Value")
+                        .HasColumnName("value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id")
+                        .HasName("pk_tokens");
+
+                    b.ToTable("token");
+                });
+
             modelBuilder.Entity("Reusable.CRUD.Entities.Revision", b =>
                 {
                     b.Property<long>("Id")

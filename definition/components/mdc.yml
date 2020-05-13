@@ -1,0 +1,9 @@
+Name: mdc
+Type: form
+Entity: MDC
+Layout:
+  - row:
+    - p: Fecha
+    - 12 7:
+        - Created At | no-label
+Slots: {}

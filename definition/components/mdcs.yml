@@ -1,0 +1,24 @@
+Name: mdcs
+Type: list
+Entity: MDC
+Layout:
+  - container lg:
+      - row:
+        - h5: MDC-List
+        - space
+        - pagination
+      - table:
+          columns:
+            - button: removeItem
+            - Control Number
+            - Document Title
+            - Process Type
+            - Department Area
+            - Owner
+            - Approvers
+            - Comments
+  - nav:
+      - search
+      - space
+      - button fab: create
+Slots: {}

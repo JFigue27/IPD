@@ -16,6 +16,7 @@ import { Container } from '@material-ui/core';
 ///end:generated:dependencies<<<
 
 import HomeService from './home.service';
+import './home.module.scss';
 
 const service = new HomeService();
 const defaultConfig = {
@@ -36,13 +37,13 @@ class HomeForm extends FormContainer<HomeProps> {
       <NoSsr>
         {/* ///start:generated:content<<< */}
 
-        <Container className='md' style={{ padding: 10 }} maxWidth='md'>
+        <Container className='md' style={{ padding: 20 }} maxWidth='md'>
           <Grid item container direction='row' className='start' justify='center' spacing={2} alignItems='flex-start'>
             <Grid item container direction='column' xs={12} sm={8}>
-              <Paper elevation={2} style={{ margin: 30 }}>
+              <Paper elevation={2} style={{ marginBottom: 25 }}>
                 <Box component='span' m={5}>
                   <Typography align='center'>
-                    <img src='/static/images/Molex_Red.png' alt='Logo Molex' style={{ width: 250}} />
+                    <img src='/static/images/Molex_Red.png' alt='Logo Molex' style={{ width: 200 }} />
                   </Typography>
                 </Box>
               </Paper>
@@ -76,8 +77,8 @@ class HomeForm extends FormContainer<HomeProps> {
                 </Grid>
               </Grid>
 
-              <List component='nav' style={{ paddingTop: 0 }}>
-                <ListItem button onClick={() => this.navigateTo('/')}>
+              <List component='nav' style={{ paddingTop: 0 }} className='app__home__list'>
+                <ListItem button onClick={() => this.navigateTo('/mdc')}>
                   <ListItemText primary='Procedure' />
                 </ListItem>
 

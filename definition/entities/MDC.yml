@@ -1,0 +1,41 @@
+Name: MDC
+Type: document
+Fields: 
+  Control Number: string
+  Document Title: string
+  Process Type: string
+  Department Area: string
+  Owner: string
+  Approvers: string
+  Comments: string
+Relationships:
+  Parent: 
+  OneToMany: 
+  ManyToOne: 
+Slots:
+  Model:
+    Imports: 
+    Extends: 
+    Ctor: 
+    Body: 
+  Logic:
+    Imports: 
+    Init: 
+    OnCreateInstance: 
+    OnGetList: 
+    OnGetSingle: 
+    BeforeSave: 
+    AfterSave: 
+    BeforeRemove: 
+    AdapterOut: 
+    Body: 
+  Gateway:
+    Imports: 
+    Endpoints: 
+    EndpointsRoutes: 
+  Service:
+    Dependencies: 
+    AdapterIn: 
+    AdapterOut: 
+    Body: 
+Table: 

@@ -47,7 +47,9 @@ namespace MyApp.Database
         }
 
         #region App
-        ///start:generated:dbsets<<<///end:generated:dbsets<<<
+        ///start:generated:dbsets<<<
+        public virtual DbSet<MDC> MDCs { get; set; }
+        ///end:generated:dbsets<<<
         #endregion
 
         #region Reusable
