@@ -11,6 +11,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyApp.Logic.Entities
 {
+    [Alias("mdc")]
+    [Table("mdcs")]
     public class MDC : BaseDocument
     {
         public MDC()
@@ -19,7 +21,7 @@ namespace MyApp.Logic.Entities
         }
 
         public string ControlNumber { get; set; }
-        public string DucumentTitle { get; set; }
+        public string DocumentTitle { get; set; }
         public string ProcessType { get; set; }
         public string DepartmentArea { get; set; }
         public string Owner { get; set; }

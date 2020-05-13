@@ -20,14 +20,11 @@ class MDCForm extends FormContainer<MDCProps> {
   }
 
   componentDidMount () {
-    this.load()
+    this.load(this.props.data.Id ? this.props.data.Id : this.props.data)
   }
 
   render() {
-    let { isLoading, isDisabled, baseEntity } = this.state;
-
-    console.log(baseEntity);
-    
+    let { isLoading, isDisabled, baseEntity } = this.state;    
 
     return (
       <NoSsr>
@@ -51,7 +48,7 @@ class MDCForm extends FormContainer<MDCProps> {
             />
           </Grid>
           <Grid item xs={12} sm>
-            <p>Fecha</p>
+            <p>Document Title</p>
           </Grid>
 
           <Grid item container direction='column' xs={12} sm={7}>
@@ -63,7 +60,7 @@ class MDCForm extends FormContainer<MDCProps> {
               onChange={event => this.handleInputChange(event, 'DocumentTitle')}
               style={{ textAlign: 'left' }}
               margin='normal'
-              disabled={true}
+              disabled={false}
               fullWidth
             />
           </Grid>

@@ -31,7 +31,7 @@ namespace Reusable.CRUD.Implementations.SS
         #region HOOKS
         virtual protected SqlExpression<Entity> OnGetList(SqlExpression<Entity> query)
         {
-            if (EntityInfo is Trackable) query.Where($"{query.Table<Entity>()}.{query.Column<Trackable>(t => t.IsDeleted)} = FALSE");
+            if (EntityInfo is Trackable) query.Where($"{query.Table<Entity>()}.{query.Column<Trackable>(t => t.IsDeleted)} = 0");
             return query;
         }
         virtual protected SqlExpression<Entity> OnGetSingle(SqlExpression<Entity> query)

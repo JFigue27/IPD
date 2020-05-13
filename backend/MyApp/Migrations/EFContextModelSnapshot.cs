@@ -183,8 +183,8 @@ namespace MyApp.Migrations
                         .HasColumnName("document_status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DucumentTitle")
-                        .HasColumnName("ducument_title")
+                    b.Property<string>("DocumentTitle")
+                        .HasColumnName("document_title")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -235,9 +235,9 @@ namespace MyApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id")
-                        .HasName("pk_md_cs");
+                        .HasName("pk_mdcs");
 
-                    b.ToTable("md_c");
+                    b.ToTable("mdc");
                 });
 
             modelBuilder.Entity("MyApp.Logic.Entities.Token", b =>

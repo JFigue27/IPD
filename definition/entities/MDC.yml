@@ -1,5 +1,6 @@
 Name: MDC
 Type: document
+Table: mdc
 Fields: 
   Control Number: string
   Document Title: string
@@ -38,4 +39,3 @@ Slots:
     AdapterIn: 
     AdapterOut: 
     Body: 
-Table: 

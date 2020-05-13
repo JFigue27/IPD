@@ -15,7 +15,10 @@ import { TableCell } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { Icon } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 import { Container } from '@material-ui/core';
+import Dialog from '../../widgets/Dialog';
+import Mdc from '../../components/MDC/mdc'
 import { AppBar } from '@material-ui/core';
 import { Toolbar } from '@material-ui/core';
 ///end:generated:dependencies<<<
@@ -39,6 +42,25 @@ class MDCsList extends ListContainer<MDCProps> {
     super(props, Object.assign(defaultConfig, config));
 
   }
+
+    componentDidMount() {
+///start:slot:load<<<
+this.load();
+///end:slot:load<<<
+
+  }
+  
+    AFTER_CREATE = async instance => {
+///start:slot:aftercreate<<<
+this.openDialog('mdc', instance)
+///end:slot:aftercreate<<<
+  };
+  
+    ON_OPEN_ITEM = item => {
+///start:slot:onopenitem<<<
+this.openDialog('mdc', item);
+///end:slot:onopenitem<<<
+  };
 
   render() {
     let { isLoading, baseEntity, baseList, filterOptions, isDisabled } = this.state;
@@ -107,9 +129,18 @@ class MDCsList extends ListContainer<MDCProps> {
             
 <TableCell  >
 
-<Button  variant='contained' size='small' onClick={event =>{event.stopPropagation(); this.removeItem(event, item)}}>
-   <Icon>delete</Icon> removeItem
-</Button>
+<Grid container direction="row" justify="center" alignItems="flex-end" spacing={1}>
+        <Grid item xs={6}>
+            <IconButton onClick={event => { this.openItem(event, item); }} size="small">
+                <Icon>edit</Icon>
+            </IconButton>
+        </Grid>
+        <Grid item xs={6}>
+            <IconButton color="secondary" onClick={event => { this.removeItem(event, item); }} size="small">
+                <Icon>delete</Icon>
+            </IconButton>
+        </Grid>
+    </Grid>
 
 </TableCell>
 <TableCell  >
@@ -147,6 +178,18 @@ class MDCsList extends ListContainer<MDCProps> {
     </Table>
 </Paper>
 </Container>
+
+<Dialog opener={this} id='mdc'
+    title="MDC"
+    
+    okLabel='Save'
+    maxWidth="lg"
+    
+    >
+    {dialog => (
+<Mdc dialog={dialog} data={(this.state as any)['mdc']}  />
+)}
+</Dialog>
 
 <AppBar position="fixed"  style={{ top: 'auto', bottom: 0 }}>
         <Toolbar variant="dense">

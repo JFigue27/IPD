@@ -9,7 +9,7 @@ Layout:
         - pagination
       - table:
           columns:
-            - button: removeItem
+            - button: updateAndRemove
             - Control Number
             - Document Title
             - Process Type
@@ -17,8 +17,18 @@ Layout:
             - Owner
             - Approvers
             - Comments
+  - dialog:
+      id: mdc
+      title: MDC
+      ok: Save
+      maxWidth: lg
+      content:
+        - component: mdc
   - nav:
       - search
       - space
       - button fab: create
-Slots: {}
+Slots:
+  Load: this.load();
+  OnOpenItem: this.openDialog('mdc', item);
+  AfterCreate: this.openDialog('mdc', instance)
