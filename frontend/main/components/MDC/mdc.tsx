@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'next/router';
-import { NoSsr, Typography, Grid, TextField } from '@material-ui/core';
+import { NoSsr, Typography, Grid, TextField, Container, Paper } from '@material-ui/core';
 import FormContainer, { FormProps } from '../../core/FormContainer';
 import { withSnackbar } from 'notistack';
 
@@ -19,53 +19,120 @@ class MDCForm extends FormContainer<MDCProps> {
     super(props, Object.assign(defaultConfig, config));
   }
 
-  componentDidMount () {
-    this.load(this.props.data.Id ? this.props.data.Id : this.props.data)
+  componentDidMount() {
+    this.load();
   }
 
   render() {
-    let { isLoading, isDisabled, baseEntity } = this.state;    
+    let { isLoading, isDisabled, baseEntity } = this.state;
 
     return (
       <NoSsr>
         {/* ///start:generated:content<<< */}
-
-        <Grid item container direction='row' justify='center' spacing={2} alignItems='baseline'>
-          <Grid item xs={12} sm>
-            <p>Fecha</p>
-          </Grid>
-
-          <Grid item container direction='column' xs={12} sm={7}>
-            <KeyboardDateTimePicker
-              clearable
-              label=''
-              value={baseEntity.CreatedAt}
-              onChange={date => this.handleDateChange(date, 'CreatedAt')}
-              format='DD/MMMM/YYYY'
-              margin='dense'
-              fullWidth
-              // disabled={isDisabled}
-            />
-          </Grid>
-          <Grid item xs={12} sm>
-            <p>Document Title</p>
-          </Grid>
-
-          <Grid item container direction='column' xs={12} sm={7}>
-            <TextField
-              type='text'
-              label='Document Title'
-              variant='outlined'
-              value={baseEntity.DocumentTitle || ''}
-              onChange={event => this.handleInputChange(event, 'DocumentTitle')}
-              style={{ textAlign: 'left' }}
-              margin='normal'
-              disabled={false}
-              fullWidth
-            />
-          </Grid>
-        </Grid>
-
+        <Container>
+          <Paper elevation={2}>
+            <Grid container direction='column' justify='center' alignItems='center'>
+              <Grid item container direction='row' xs={12} spacing={2}>
+                <Grid item xs={2}>
+                  <TextField
+                    type='text'
+                    label='MDC-Number'
+                    variant='outlined'
+                    value={baseEntity.ControlNumber || ''}
+                    onChange={event => this.handleInputChange(event, 'ControlNumber')}
+                    style={{ textAlign: 'left' }}
+                    margin='normal'
+                    disabled={false}
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={8}></Grid>
+                <Grid item xs={2}>
+                  <KeyboardDateTimePicker
+                    clearable
+                    label='Date Created At'
+                    value={baseEntity.CreatedAt}
+                    onChange={date => this.handleDateChange(date, 'CreatedAt')}
+                    format='DD/MMMM/YYYY'
+                    margin='dense'
+                    fullWidth
+                    // disabled={isDisabled}
+                  />
+                </Grid>
+              </Grid>
+              <Grid item container direction='row' xs={12} spacing={2}>
+                <Grid item xs={3}>
+                  <TextField
+                    type='text'
+                    label='Process Type'
+                    variant='outlined'
+                    value={baseEntity.ProcessType || ''}
+                    onChange={event => this.handleInputChange(event, 'ProcessType')}
+                    style={{ textAlign: 'left' }}
+                    margin='normal'
+                    disabled={false}
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={3}>
+                  <TextField
+                    type='text'
+                    label='Document Tiltle'
+                    variant='outlined'
+                    value={baseEntity.DocumentTitle || ''}
+                    onChange={event => this.handleInputChange(event, 'DocumentTitle')}
+                    style={{ textAlign: 'left' }}
+                    margin='normal'
+                    disabled={false}
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={3}>
+                  <TextField
+                    type='text'
+                    label='Owner'
+                    variant='outlined'
+                    value={baseEntity.Owner || ''}
+                    onChange={event => this.handleInputChange(event, 'Owner')}
+                    style={{ textAlign: 'left' }}
+                    margin='normal'
+                    disabled={false}
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={3}>
+                  <TextField
+                    type='text'
+                    label='Department or Area'
+                    variant='outlined'
+                    value={baseEntity.DepartmentArea || ''}
+                    onChange={event => this.handleInputChange(event, 'DepartmentArea')}
+                    style={{ textAlign: 'left' }}
+                    margin='normal'
+                    disabled={false}
+                    fullWidth
+                  />
+                </Grid>
+              </Grid>
+              <Grid item container direction='row' xs={12} spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    type='text'
+                    label='Comments'
+                    multiline
+                    variant='outlined'
+                    value={baseEntity.Comments || ''}
+                    onChange={event => this.handleInputChange(event, 'Comments')}
+                    style={{ textAlign: 'left' }}
+                    margin='normal'
+                    disabled={false}
+                    fullWidth
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Container>
         {/* ///end:generated:content<<< */}
       </NoSsr>
     );
