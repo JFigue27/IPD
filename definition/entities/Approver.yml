@@ -1,22 +1,17 @@
-Name: MDC
+Name: Approver
 Type: document
-Table: mdc
+Table: approver
 Fields: 
-  Control Number: string
-  Document Title: string
-  Process Type: string
-  MDC Dead Line: date
+  Deadline: date
+  Approver Name: string
   Department Area: string
-  Owner: string
   Approval Status: string
-  Is Need Training: boolean
-  Comments: string
+  Approval Comments: string
 Relationships:
   Parent: 
   OneToMany: 
-    - Approver
-    - MdcAttachmentFile
   ManyToOne: 
+    - MDC
 Slots:
   Model:
     Imports: 

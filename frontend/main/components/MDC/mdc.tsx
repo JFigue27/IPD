@@ -20,7 +20,7 @@ class MDCForm extends FormContainer<MDCProps> {
   }
 
   componentDidMount() {
-    this.load();
+    this.load(this.props.data.Id ? this.props.data.Id : this.props.data);
   }
 
   render() {

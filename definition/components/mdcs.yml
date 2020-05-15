@@ -15,7 +15,8 @@ Layout:
             - Process Type
             - Department Area
             - Owner
-            - Approvers
+            - Is Need Training
+            - MDC Dead Line
             - Comments
   - dialog:
       id: mdc

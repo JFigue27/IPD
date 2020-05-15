@@ -191,6 +191,14 @@ namespace MyApp.Migrations
                         .HasColumnName("is_deleted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsNeedTraining")
+                        .HasColumnName("is_need_training")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset>("MDCDeadLine")
+                        .HasColumnName("mdc_dead_line")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<string>("Owner")
                         .HasColumnName("owner")
                         .HasColumnType("nvarchar(max)");

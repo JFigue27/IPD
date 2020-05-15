@@ -1,22 +1,18 @@
-Name: MDC
+Name: MdcAttachmentFile
 Type: document
-Table: mdc
+Table: Mdc Attachment File
 Fields: 
-  Control Number: string
-  Document Title: string
-  Process Type: string
-  MDC Dead Line: date
-  Department Area: string
-  Owner: string
-  Approval Status: string
-  Is Need Training: boolean
-  Comments: string
+  Mdc Attachment File: string
+  File Version: string
+  Periodic Review: date
+  Release Date: date
+  Approval File Status: string
 Relationships:
   Parent: 
   OneToMany: 
-    - Approver
-    - MdcAttachmentFile
+    - AttachmentFileComment
   ManyToOne: 
+    - MDC
 Slots:
   Model:
     Imports: 

@@ -48,7 +48,10 @@ namespace MyApp.Database
 
         #region App
         ///start:generated:dbsets<<<
+        public virtual DbSet<Approver> Approvers { get; set; }
+        public virtual DbSet<AttachmentFileComment> AttachmentFileComments { get; set; }
         public virtual DbSet<MDC> MDCs { get; set; }
+        public virtual DbSet<MdcAttachmentFile> MdcAttachmentFiles { get; set; }
         ///end:generated:dbsets<<<
         #endregion
 

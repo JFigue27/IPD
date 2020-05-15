@@ -64,7 +64,7 @@ class MDCsList extends ListContainer<MDCProps> {
       <NoSsr>
         {/* ///start:generated:content<<< */}
 
-        <Container className='lg' style={{ padding: 20 }} maxWidth='lg'>
+        <Container className='lg' style={{ padding: 10 }} maxWidth='lg'>
           <Grid item container direction='row' justify='center' spacing={2} alignItems='baseline'>
             <Grid item xs={12} sm>
               <Typography variant='h5' gutterBottom>
@@ -97,7 +97,8 @@ class MDCsList extends ListContainer<MDCProps> {
                   <TableCell variant='head'>Process Type</TableCell>
                   <TableCell variant='head'>Department Area</TableCell>
                   <TableCell variant='head'>Owner</TableCell>
-                  <TableCell variant='head'>Approvers</TableCell>
+                  <TableCell variant='head'>Is Need Training</TableCell>
+                  <TableCell variant='head'>MDC Dead Line</TableCell>
                   <TableCell variant='head'>Comments</TableCell>
                 </TableRow>
               </TableHead>
@@ -145,9 +146,8 @@ class MDCsList extends ListContainer<MDCProps> {
                       <TableCell>
                         <Typography align='left'>{item.Owner}</Typography>
                       </TableCell>
-                      <TableCell>
-                        <Typography align='left'>{item.Approvers}</Typography>
-                      </TableCell>
+                      <TableCell>{(item.IsNeedTraining || '').toString().toUpperCase()}</TableCell>
+                      <TableCell>{this.formatDate(item.MDCDeadLine)}</TableCell>
                       <TableCell>
                         <Typography align='left'>{item.Comments}</Typography>
                       </TableCell>
@@ -158,7 +158,7 @@ class MDCsList extends ListContainer<MDCProps> {
           </Paper>
         </Container>
 
-        <Dialog opener={this} id='mdc' title='MDC' okLabel='Save' maxWidth='lg'>
+        <Dialog opener={this} id='mdc' title='MDC' okLabel='Save' maxWidth='lg' dividersOff>
           {dialog => <Mdc dialog={dialog} data={(this.state as any)['mdc']} />}
         </Dialog>
 

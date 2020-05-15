@@ -251,7 +251,10 @@ namespace MyApp
 
             // This App:
             ///start:generated:di<<<
+            container.RegisterAutoWired<ApproverLogic>().ReusedWithin(ReuseScope.Request);
+            container.RegisterAutoWired<AttachmentFileCommentLogic>().ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWired<MDCLogic>().ReusedWithin(ReuseScope.Request);
+            container.RegisterAutoWired<MdcAttachmentFileLogic>().ReusedWithin(ReuseScope.Request);
             ///end:generated:di<<<
             #endregion
 
