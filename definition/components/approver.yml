@@ -1,0 +1,15 @@
+Name: approver
+Type: form
+Entity: Approver
+Layout:
+  - container sm:
+      - Approver Name
+      - Department Area
+      - Approval Status
+      - Approval Comments
+      - Deadline
+Slots:
+  Load: |
+    this.setState({isDisabled: false});
+    this.load();
+  AfterLoad: 'this.setState({isDisabled: false});'

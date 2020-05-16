@@ -11,8 +11,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyApp.Logic.Entities
 {
-    [Alias("Mdc Attachment File")]
-    [Table("Mdc Attachment Files")]
+    [Alias("mdc_attachment_file")]
+    [Table("mdc_attachment_files")]
     public class MdcAttachmentFile : BaseDocument
     {
         public MdcAttachmentFile()
@@ -22,11 +22,18 @@ namespace MyApp.Logic.Entities
             ReleaseDate = DateTimeOffset.Now;
         }
 
-        public string MdcAttachmentFile { get; set; }
+        public string MdcAttachment { get; set; }
         public string FileVersion { get; set; }
         public DateTimeOffset PeriodicReview { get; set; }
         public DateTimeOffset ReleaseDate { get; set; }
         public string ApprovalFileStatus { get; set; }
+
+        [Reference]
+        public List<AttachmentFileComment> AttachmentFileComments { get; set; }
+
+        [Reference]
+        public MDC MDC { get; set; }
+        public long? MDCId { get; set; }
 
     }
 }

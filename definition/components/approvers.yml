@@ -1,0 +1,29 @@
+Name: approvers
+Type: list
+Entity: Approver
+Layout:
+  - container md:
+      - row:
+          - h5: Approvers
+          - space
+          - button: create as New Approver
+          - pagination
+      - table:
+          columns:
+            - button: updateAndRemove
+            - Approver Name
+            - Department Area
+            - Deadline
+            - Approval Status
+            - Approval Comments
+  - dialog:
+      id: approver
+      title: Approver
+      ok: Save
+      maxWidth: sm
+      content:
+        - component: approver
+Slots:
+  Load: this.load();
+  OnOpenItem: this.openDialog('approver', item);
+  AfterCreate: this.openDialog('approver', instance);

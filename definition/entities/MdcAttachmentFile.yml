@@ -1,8 +1,8 @@
 Name: MdcAttachmentFile
 Type: document
-Table: Mdc Attachment File
+Table: mdc_attachment_file
 Fields: 
-  Mdc Attachment File: string
+  Mdc Attachment: string
   File Version: string
   Periodic Review: date
   Release Date: date

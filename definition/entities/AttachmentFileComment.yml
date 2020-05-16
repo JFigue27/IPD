@@ -1,6 +1,6 @@
 Name: AttachmentFileComment
 Type: entity
-Table: Attachment File Comment
+Table: attachment_file_comment
 Fields: 
   Approver Name: string
   Comment: string

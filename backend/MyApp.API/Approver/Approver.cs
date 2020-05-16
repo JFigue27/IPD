@@ -27,5 +27,9 @@ namespace MyApp.Logic.Entities
         public string ApprovalStatus { get; set; }
         public string ApprovalComments { get; set; }
 
+        [Reference]
+        public MDC MDC { get; set; }
+        public long? MDCId { get; set; }
+
     }
 }

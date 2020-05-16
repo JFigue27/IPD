@@ -3,3 +3,5 @@ DisplayName:
 Pages:
   index: home
   mdc: mdcs
+  approver: approver
+  approvers: approvers

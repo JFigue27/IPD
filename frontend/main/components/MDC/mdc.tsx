@@ -6,6 +6,7 @@ import { withSnackbar } from 'notistack';
 
 import MDCService from './mdc.service';
 import { KeyboardDateTimePicker } from '@material-ui/pickers';
+import Approvers from '../Approver/approvers';
 
 const service = new MDCService();
 const defaultConfig = {
@@ -130,6 +131,9 @@ class MDCForm extends FormContainer<MDCProps> {
                   />
                 </Grid>
               </Grid>
+
+              {baseEntity.Id && <Approvers mdc={baseEntity} />}
+              <pre>{JSON.stringify(baseEntity, null, 3)}</pre>
             </Grid>
           </Paper>
         </Container>
