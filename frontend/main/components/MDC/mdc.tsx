@@ -21,7 +21,7 @@ class MDCForm extends FormContainer<MDCProps> {
   }
 
   componentDidMount() {
-    this.load(this.props.data.Id ? this.props.data.Id : this.props.data);
+    this.load(this.props.data?.Id ? this.props.data.Id : {});
   }
 
   render() {
@@ -132,8 +132,8 @@ class MDCForm extends FormContainer<MDCProps> {
                 </Grid>
               </Grid>
 
-              {baseEntity.Id && <Approvers mdc={baseEntity} />}
-              <pre>{JSON.stringify(baseEntity, null, 3)}</pre>
+              {baseEntity.Id > 0 && <Approvers mdc={baseEntity} />}
+              {/* <pre>{JSON.stringify(baseEntity, null, 3)}</pre> */}
             </Grid>
           </Paper>
         </Container>

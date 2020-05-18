@@ -29,25 +29,28 @@ class ApproverForm extends FormContainer<ApproverProps> {
   componentDidMount() {
     ///start:slot:load<<<
     this.setState({ isDisabled: false });
-    this.load();
-
+    this.load(this.props.data.Id ? this.props.data.Id : this.props.data);
     ///end:slot:load<<<
   }
 
-  AFTER_LOAD = entity => {
+  AFTER_LOAD = instance => {
     ///start:slot:afterload<<<
     this.setState({ isDisabled: false });
     ///end:slot:afterload<<<
   };
 
+  AFTER_CREATE = instance => {};
+
   render() {
     let { isLoading, isDisabled, baseEntity } = this.state;
+
+    console.log(this.props.MDCId);
 
     return (
       <NoSsr>
         {/* ///start:generated:content<<< */}
 
-        <Container className='sm' style={{ padding: 20 }} maxWidth='sm'>
+        <Container className='sm' maxWidth='sm'>
           <TextField
             type='text'
             label='Approver Name'
@@ -115,7 +118,7 @@ class ApproverForm extends FormContainer<ApproverProps> {
             disabled={isDisabled}
           />
 
-          <pre>{JSON.stringify(baseEntity, null, 3)}</pre>
+          {/* <pre>{JSON.stringify(baseEntity, null, 3)}</pre> */}
         </Container>
 
         {/* ///end:generated:content<<< */}
