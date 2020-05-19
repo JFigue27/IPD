@@ -5,3 +5,5 @@ Pages:
   mdc: mdcs
   approver: approver
   approvers: approvers
+  mdc-attachment-files: mdcAttachmentFiles
+  mdc-attachment-file: mdcAttachmentFile

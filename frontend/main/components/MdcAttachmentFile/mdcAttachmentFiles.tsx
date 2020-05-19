@@ -7,34 +7,34 @@ import Pagination from 'react-js-pagination';
 import ListContainer, { ListProps } from '../../core/ListContainer';
 
 ///start:generated:dependencies<<<
+import { Button } from '@material-ui/core';
 import { Table } from '@material-ui/core';
 import { TableHead } from '@material-ui/core';
 import { TableBody } from '@material-ui/core';
 import { TableRow } from '@material-ui/core';
 import { TableCell } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
-import { Button } from '@material-ui/core';
 import { Icon } from '@material-ui/core';
 import { IconButton } from '@material-ui/core';
 import { Container } from '@material-ui/core';
 import Dialog from '../../widgets/Dialog';
-import Mdc from '../../components/MDC/mdc';
-import { AppBar } from '@material-ui/core';
-import { Toolbar } from '@material-ui/core';
+import Mdcattachmentfile from '../../components/MdcAttachmentFile/mdcAttachmentFile';
 ///end:generated:dependencies<<<
 
-import MDCService from './mdc.service';
+import MdcAttachmentFileService from './mdcattachmentfile.service';
 
-const service = new MDCService();
+const service = new MdcAttachmentFileService();
 const defaultConfig = {
   service,
-  filterName: 'MDCs',
-  sortname: 'MDCs'
+  filterName: 'MdcAttachmentFiles',
+  sortname: 'MdcAttachmentFiles'
 };
 
-interface MDCProps extends ListProps {}
+interface MdcAttachmentFileProps extends ListProps {
+  mdc?: any;
+}
 
-class MDCsList extends ListContainer<MDCProps> {
+class MdcAttachmentFilesList extends ListContainer<MdcAttachmentFileProps> {
   constructor(props, config) {
     super(props, Object.assign(defaultConfig, config));
   }
@@ -47,13 +47,13 @@ class MDCsList extends ListContainer<MDCProps> {
 
   AFTER_CREATE = async instance => {
     ///start:slot:aftercreate<<<
-    this.openDialog('mdc', instance);
+    this.openDialog('mdcAttachmentFile', instance);
     ///end:slot:aftercreate<<<
   };
 
   ON_OPEN_ITEM = item => {
     ///start:slot:onopenitem<<<
-    this.openDialog('mdc', item);
+    this.openDialog('mdcAttachmentFile', item);
     ///end:slot:onopenitem<<<
   };
 
@@ -64,15 +64,27 @@ class MDCsList extends ListContainer<MDCProps> {
       <NoSsr>
         {/* ///start:generated:content<<< */}
 
-        <Container className='lg' style={{ padding: 10 }} maxWidth='lg'>
+        <Container className='md' style={{ padding: 20 }} maxWidth='md'>
           <Grid item container direction='row' justify='center' spacing={2} alignItems='baseline'>
             <Grid item xs={12} sm>
               <Typography variant='h5' gutterBottom>
-                MDC-List
+                MDC Attachments
               </Typography>
             </Grid>
             <Grid item xs={12} sm />
 
+            <Grid item xs={12} sm>
+              <Button
+                variant='contained'
+                size='small'
+                onClick={event => {
+                  event.stopPropagation();
+                  this.createInstance({ MDCId: this.props.mdc.Id });
+                }}
+              >
+                Add New File
+              </Button>
+            </Grid>
             <Grid container direction='row'>
               <Grid item xs />
               <Pagination
@@ -92,14 +104,11 @@ class MDCsList extends ListContainer<MDCProps> {
               <TableHead>
                 <TableRow>
                   <TableCell variant='head'></TableCell>
-                  <TableCell variant='head'>Control Number</TableCell>
-                  <TableCell variant='head'>Document Title</TableCell>
-                  <TableCell variant='head'>Process Type</TableCell>
-                  <TableCell variant='head'>Department Area</TableCell>
-                  <TableCell variant='head'>Owner</TableCell>
-                  <TableCell variant='head'>Is Need Training</TableCell>
-                  <TableCell variant='head'>MDC Dead Line</TableCell>
-                  <TableCell variant='head'>Comments</TableCell>
+                  <TableCell variant='head'>Mdc Attachment</TableCell>
+                  <TableCell variant='head'>File Version</TableCell>
+                  <TableCell variant='head'>Periodic Review</TableCell>
+                  <TableCell variant='head'>Release Date</TableCell>
+                  <TableCell variant='head'>Approval File Status</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -132,24 +141,15 @@ class MDCsList extends ListContainer<MDCProps> {
                         </Grid>
                       </TableCell>
                       <TableCell>
-                        <Typography align='left'>{item.ControlNumber}</Typography>
+                        <Typography align='left'>{item.MdcAttachment}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography align='left'>{item.DocumentTitle}</Typography>
+                        <Typography align='left'>{item.FileVersion}</Typography>
                       </TableCell>
+                      <TableCell>{this.formatDate(item.PeriodicReview)}</TableCell>
+                      <TableCell>{this.formatDate(item.ReleaseDate)}</TableCell>
                       <TableCell>
-                        <Typography align='left'>{item.ProcessType}</Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Typography align='left'>{item.DepartmentArea}</Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Typography align='left'>{item.Owner}</Typography>
-                      </TableCell>
-                      <TableCell>{(item.IsNeedTraining || '').toString().toUpperCase()}</TableCell>
-                      <TableCell>{this.formatDate(item.MDCDeadLine)}</TableCell>
-                      <TableCell>
-                        <Typography align='left'>{item.Comments}</Typography>
+                        <Typography align='left'>{item.ApprovalFileStatus}</Typography>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -158,32 +158,9 @@ class MDCsList extends ListContainer<MDCProps> {
           </Paper>
         </Container>
 
-        <Dialog opener={this} id='mdc' title='MDC' okLabel='Save' maxWidth='xl' dividersOff>
-          {dialog => <Mdc dialog={dialog} data={(this.state as any)['mdc']} />}
+        <Dialog opener={this} id='mdcAttachmentFile' title='MDC Files' okLabel='Save' maxWidth='sm'>
+          {dialog => <Mdcattachmentfile dialog={dialog} data={(this.state as any)['mdcAttachmentFile']} />}
         </Dialog>
-
-        <AppBar position='fixed' style={{ top: 'auto', bottom: 0 }}>
-          <Toolbar variant='dense'>
-            <SearchBox
-              bindFilterInput={this.bindFilterInput}
-              value={filterOptions.filterGeneral}
-              clear={() => this.clearInput('filterGeneral')}
-            />
-            <Grid item xs={12} sm />
-
-            <Button
-              className='fab'
-              variant='contained'
-              size='small'
-              onClick={event => {
-                event.stopPropagation();
-                this.createInstance({});
-              }}
-            >
-              create
-            </Button>
-          </Toolbar>
-        </AppBar>
 
         {/* ///end:generated:content<<< */}
       </NoSsr>
@@ -191,4 +168,4 @@ class MDCsList extends ListContainer<MDCProps> {
   }
 }
 
-export default withSnackbar(withRouter(MDCsList) as any) as React.ComponentClass<MDCProps>;
+export default withSnackbar(withRouter(MdcAttachmentFilesList) as any) as React.ComponentClass<MdcAttachmentFileProps>;

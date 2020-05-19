@@ -1,0 +1,15 @@
+Name: mdcAttachmentFile
+Type: form
+Entity: MdcAttachmentFile
+Layout:
+  - container sm:
+      - Mdc Attachment
+      - File Version
+      - Periodic Review
+      - Release Date
+      - Approval File Status
+Slots:
+  Load: |
+    this.setState({isDisabled: false});
+    this.load();
+  AfterLoad: 'this.setState({isDisabled: false});'

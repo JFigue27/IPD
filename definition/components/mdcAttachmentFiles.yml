@@ -1,0 +1,29 @@
+Name: mdcAttachmentFiles
+Type: list
+Entity: MdcAttachmentFile
+Layout:
+  - container md:
+      - row:
+          - h5: MDC Attachments
+          - space
+          - button: create as Add New File
+          - pagination
+      - table:
+          columns:
+            - button: updateAndRemove
+            - Mdc Attachment
+            - File Version
+            - Periodic Review
+            - Release Date
+            - Approval File Status
+  - dialog:
+      id: mdcAttachmentFile
+      title: MDC Files
+      ok: Save
+      maxWidth: sm
+      content:
+        - component: mdcAttachmentFile
+Slots:
+  Load: this.load();
+  OnOpenItem: this.openDialog('mdcAttachmentFile', item);
+  AfterCreate: this.openDialog('mdcAttachmentFile', instance);
