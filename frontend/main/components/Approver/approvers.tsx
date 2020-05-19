@@ -70,30 +70,26 @@ class ApproversList extends ListContainer<ApproverProps> {
     return (
       <NoSsr>
         {/* ///start:generated:content<<< */}
-
-        <Container className='md' style={{ padding: 20 }} maxWidth='md'>
-          <Grid item container direction='row' justify='center' spacing={2} alignItems='baseline'>
-            <Grid item xs={12} sm>
-              <Typography variant='h5' gutterBottom>
-                Approvers
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm />
-
-            <Grid item xs={12} sm>
-              <Button
-                variant='contained'
-                size='small'
-                onClick={event => {
-                  event.stopPropagation();
-                  this.createInstance({ MDCId: this.props.mdc.Id });
-                }}
-              >
-                New Approver
-              </Button>
-            </Grid>
-            <Grid container direction='row'>
-              <Grid item xs />
+        <Container className='md' maxWidth='md' style={{ padding: 5 }}>
+          <Paper style={{ width: '100%', overflowX: 'auto', marginTop: 20 }} elevation={5}>
+            <Grid container direction='row' style={{ padding: 5 }}>
+              <Grid item xs>
+                <Typography variant='h5' gutterBottom>
+                  Approvers
+                </Typography>
+              </Grid>
+              <Grid item xs>
+                <Button
+                  variant='contained'
+                  size='small'
+                  onClick={event => {
+                    event.stopPropagation();
+                    this.createInstance({ MDCId: this.props.mdc.Id });
+                  }}
+                >
+                  New Approver
+                </Button>
+              </Grid>
               <Pagination
                 activePage={filterOptions.page}
                 itemsCountPerPage={filterOptions.limit}
@@ -104,18 +100,16 @@ class ApproversList extends ListContainer<ApproverProps> {
                 }}
               />
             </Grid>
-          </Grid>
 
-          <Paper style={{ width: '100%', overflowX: 'auto' }}>
             <Table size='small'>
               <TableHead>
                 <TableRow>
                   <TableCell variant='head'></TableCell>
-                  <TableCell variant='head'>Approver Name</TableCell>
-                  <TableCell variant='head'>Department Area</TableCell>
+                  <TableCell variant='head'>Name</TableCell>
+                  <TableCell variant='head'>Dept/Area</TableCell>
                   <TableCell variant='head'>Deadline</TableCell>
-                  <TableCell variant='head'>Approval Status</TableCell>
-                  <TableCell variant='head'>Approval Comments</TableCell>
+                  <TableCell variant='head'>Status</TableCell>
+                  <TableCell variant='head'>Comments</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

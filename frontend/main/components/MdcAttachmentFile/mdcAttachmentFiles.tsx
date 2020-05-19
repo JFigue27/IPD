@@ -63,30 +63,26 @@ class MdcAttachmentFilesList extends ListContainer<MdcAttachmentFileProps> {
     return (
       <NoSsr>
         {/* ///start:generated:content<<< */}
-
-        <Container className='md' style={{ padding: 20 }} maxWidth='md'>
-          <Grid item container direction='row' justify='center' spacing={2} alignItems='baseline'>
-            <Grid item xs={12} sm>
-              <Typography variant='h5' gutterBottom>
-                MDC Attachments
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm />
-
-            <Grid item xs={12} sm>
-              <Button
-                variant='contained'
-                size='small'
-                onClick={event => {
-                  event.stopPropagation();
-                  this.createInstance({ MDCId: this.props.mdc.Id });
-                }}
-              >
-                Add New File
-              </Button>
-            </Grid>
-            <Grid container direction='row'>
-              <Grid item xs />
+        <Container className='md' style={{ padding: 5 }} maxWidth='md'>
+          <Paper style={{ width: '100%', overflowX: 'auto', marginTop: 20 }} elevation={5}>
+            <Grid container direction='row' style={{ padding: 5 }}>
+              <Grid item xs>
+                <Typography variant='h5' gutterBottom>
+                  MDC Attachments
+                </Typography>
+              </Grid>
+              <Grid item xs>
+                <Button
+                  variant='contained'
+                  size='small'
+                  onClick={event => {
+                    event.stopPropagation();
+                    this.createInstance({ MDCId: this.props.mdc.Id });
+                  }}
+                >
+                  Add New File
+                </Button>
+              </Grid>
               <Pagination
                 activePage={filterOptions.page}
                 itemsCountPerPage={filterOptions.limit}
@@ -97,18 +93,15 @@ class MdcAttachmentFilesList extends ListContainer<MdcAttachmentFileProps> {
                 }}
               />
             </Grid>
-          </Grid>
-
-          <Paper style={{ width: '100%', overflowX: 'auto' }}>
             <Table size='small'>
               <TableHead>
                 <TableRow>
                   <TableCell variant='head'></TableCell>
-                  <TableCell variant='head'>Mdc Attachment</TableCell>
-                  <TableCell variant='head'>File Version</TableCell>
+                  <TableCell variant='head'>File</TableCell>
+                  <TableCell variant='head'>Version</TableCell>
                   <TableCell variant='head'>Periodic Review</TableCell>
                   <TableCell variant='head'>Release Date</TableCell>
-                  <TableCell variant='head'>Approval File Status</TableCell>
+                  <TableCell variant='head'>Status</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
