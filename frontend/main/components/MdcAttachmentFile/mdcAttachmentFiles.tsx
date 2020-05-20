@@ -63,12 +63,12 @@ class MdcAttachmentFilesList extends ListContainer<MdcAttachmentFileProps> {
     return (
       <NoSsr>
         {/* ///start:generated:content<<< */}
-        <Container className='md' style={{ padding: 5 }} maxWidth='md'>
+        <Container className='lg' style={{ padding: 5 }} maxWidth='lg'>
           <Paper style={{ width: '100%', overflowX: 'auto', marginTop: 20 }} elevation={5}>
             <Grid container direction='row' style={{ padding: 5 }}>
               <Grid item xs>
                 <Typography variant='h5' gutterBottom>
-                  MDC Attachments
+                  Attachments
                 </Typography>
               </Grid>
               <Grid item xs>

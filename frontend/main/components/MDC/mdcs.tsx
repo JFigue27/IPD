@@ -45,7 +45,7 @@ class MDCsList extends ListContainer<MDCProps> {
     ///end:slot:load<<<
   }
 
-  AFTER_CREATE = async instance => {
+  AFTER_CREATE = instance => {
     ///start:slot:aftercreate<<<
     this.openDialog('mdc', instance);
     ///end:slot:aftercreate<<<
@@ -158,7 +158,7 @@ class MDCsList extends ListContainer<MDCProps> {
           </Paper>
         </Container>
 
-        <Dialog opener={this} id='mdc' title='MDC' okLabel='Save' maxWidth='xl' dividersOff>
+        <Dialog opener={this} id='mdc' title='MDC' okLabel='Save' maxWidth='lg' dividersOff>
           {dialog => <Mdc dialog={dialog} data={(this.state as any)['mdc']} />}
         </Dialog>
 

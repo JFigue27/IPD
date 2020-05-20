@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'next/router';
-import { NoSsr, Typography, Grid, TextField, Container, Paper } from '@material-ui/core';
+import { NoSsr, Typography, Grid, TextField, Container, Paper, FormControlLabel, Switch } from '@material-ui/core';
 import FormContainer, { FormProps } from '../../core/FormContainer';
 import { withSnackbar } from 'notistack';
 
@@ -8,11 +8,16 @@ import MDCService from './mdc.service';
 import { KeyboardDateTimePicker } from '@material-ui/pickers';
 import Approvers from '../Approver/approvers';
 import MdcAttachmentFiles from '../MdcAttachmentFile/mdcAttachmentFiles';
+import Autocomplete from '../../widgets/Autocomplete';
 
 const service = new MDCService();
 const defaultConfig = {
   service
 };
+import AccountService from '../Account/account.service';
+const accountService = new AccountService();
+
+const PType = ['Procedure', 'ITJ', 'Spec', 'WI', 'etc', 'etc2'];
 
 interface MDCProps extends FormProps {}
 
@@ -23,17 +28,23 @@ class MDCForm extends FormContainer<MDCProps> {
 
   componentDidMount() {
     this.load(this.props.data?.Id ? this.props.data.Id : {});
+
+    accountService.LoadEntities().then(accounts => this.setState({ accounts }));
   }
 
   render() {
     let { isLoading, isDisabled, baseEntity } = this.state;
+    const { accounts } = this.state as any;
+
+    console.log(accounts);
+    console.log(PType);
 
     return (
       <NoSsr>
         {/* ///start:generated:content<<< */}
-        <Container maxWidth='xl'>
+        <Container maxWidth='lg'>
           <Grid container direction='column' justify='center' alignItems='center'>
-            <Grid item container direction='row' xs={12} spacing={2}>
+            <Grid item container direction='row' spacing={2}>
               <Grid item xs={2}>
                 <TextField
                   type='text'
@@ -61,18 +72,15 @@ class MDCForm extends FormContainer<MDCProps> {
                 />
               </Grid>
             </Grid>
-            <Grid item container direction='row' xs={12} spacing={2}>
-              <Grid item xs={3}>
-                <TextField
-                  type='text'
+            <Grid item container direction='row' spacing={2}>
+              <Grid item xs={2} style={{ marginTop: 11 }}>
+                <Autocomplete
+                  flat
+                  options={PType}
+                  owner={baseEntity}
+                  onChange={this.handleAutocomplete}
+                  targetProp='ProcessType'
                   label='Process Type'
-                  variant='outlined'
-                  value={baseEntity.ProcessType || ''}
-                  onChange={event => this.handleInputChange(event, 'ProcessType')}
-                  style={{ textAlign: 'left' }}
-                  margin='normal'
-                  disabled={false}
-                  fullWidth
                 />
               </Grid>
               <Grid item xs={3}>
@@ -88,20 +96,18 @@ class MDCForm extends FormContainer<MDCProps> {
                   fullWidth
                 />
               </Grid>
-              <Grid item xs={3}>
-                <TextField
-                  type='text'
+              <Grid item xs={3} style={{ marginTop: 11 }}>
+                <Autocomplete
+                  options={accounts}
+                  displayValue='UserName'
+                  fromProp='UserName'
+                  owner={baseEntity}
+                  onChange={this.handleAutocomplete}
+                  targetProp='Owner'
                   label='Owner'
-                  variant='outlined'
-                  value={baseEntity.Owner || ''}
-                  onChange={event => this.handleInputChange(event, 'Owner')}
-                  style={{ textAlign: 'left' }}
-                  margin='normal'
-                  disabled={false}
-                  fullWidth
                 />
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={2}>
                 <TextField
                   type='text'
                   label='Department or Area'
@@ -114,8 +120,23 @@ class MDCForm extends FormContainer<MDCProps> {
                   fullWidth
                 />
               </Grid>
+              <Grid item xs={2}>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      color='primary'
+                      onChange={event => this.handleCheckBoxChange(event, 'isNeedTraining')}
+                      checked={baseEntity.isNeedTraining == 1}
+                      value={baseEntity.isNeedTraining}
+                    />
+                  }
+                  label='Need Training?'
+                  labelPlacement='top'
+                  // disabled={isDisabled}
+                />
+              </Grid>
             </Grid>
-            <Grid item container direction='row' xs={12} spacing={2}>
+            <Grid item container direction='row' spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   type='text'
@@ -131,17 +152,25 @@ class MDCForm extends FormContainer<MDCProps> {
                 />
               </Grid>
             </Grid>
-            <Grid container xs={12}>
+            {/* <Grid container>
               <Grid item xs={6}>
                 {baseEntity.Id > 0 && <Approvers mdc={baseEntity} />}
               </Grid>
               <Grid item xs={6}>
                 {baseEntity.Id > 0 && <MdcAttachmentFiles mdc={baseEntity} />}
               </Grid>
+            </Grid> */}
+            <Grid container>
+              {baseEntity.Id > 0 && (
+                <>
+                  <Grid item xs={12}>
+                    <MdcAttachmentFiles mdc={baseEntity} />
+                  </Grid>
+                </>
+              )}
+              {baseEntity.Id > 0 && <Approvers mdc={baseEntity} />}
             </Grid>
 
-            {/* {baseEntity.Id > 0 && <MdcAttachmentFiles mdc={baseEntity} />}
-            {baseEntity.Id > 0 && <Approvers mdc={baseEntity} />} */}
             {/* <pre>{JSON.stringify(baseEntity, null, 3)}</pre> */}
           </Grid>
         </Container>

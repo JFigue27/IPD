@@ -44,8 +44,6 @@ class ApproverForm extends FormContainer<ApproverProps> {
   render() {
     let { isLoading, isDisabled, baseEntity } = this.state;
 
-    console.log(this.props.MDCId);
-
     return (
       <NoSsr>
         {/* ///start:generated:content<<< */}

@@ -67,7 +67,7 @@ class AutocompleteWidget extends React.Component<Props> {
       return true;
     }
 
-    if(disabled != nextDisabled) {
+    if (disabled != nextDisabled) {
       return true;
     }
 
@@ -140,7 +140,9 @@ class AutocompleteWidget extends React.Component<Props> {
         options={options || []}
         value={value}
         onChange={this._onChange}
-        renderInput={params => <TextField {...params} label={label} fullWidth autoComplete='off' style={{marginBottom: 4, marginTop: 4}} />}
+        renderInput={params => (
+          <TextField {...params} label={label} fullWidth variant='outlined' autoComplete='off' style={{ marginBottom: 4, marginTop: 4 }} />
+        )}
         disabled={disabled}
         autoSelect={autoSelect}
         autoHighlight

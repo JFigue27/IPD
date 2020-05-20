@@ -1,7 +1,7 @@
 Name: MDC
 Type: document
 Table: mdc
-Fields: 
+Fields:
   Control Number: string
   Document Title: string
   Process Type: string
@@ -12,34 +12,34 @@ Fields:
   Is Need Training: boolean
   Comments: string
 Relationships:
-  Parent: 
-  OneToMany: 
+  Parent:
+  OneToMany:
     - Approver
     - MdcAttachmentFile
-  ManyToOne: 
+  ManyToOne:
 Slots:
   Model:
-    Imports: 
-    Extends: 
-    Ctor: 
-    Body: 
+    Imports:
+    Extends:
+    Ctor:
+    Body:
   Logic:
-    Imports: 
-    Init: 
-    OnCreateInstance: 
-    OnGetList: 
-    OnGetSingle: 
-    BeforeSave: 
-    AfterSave: 
-    BeforeRemove: 
-    AdapterOut: 
+    Imports:
+    Init:
+    OnCreateInstance:
+    OnGetList:
+    OnGetSingle:
+    BeforeSave:
+    AfterSave:
+    BeforeRemove:
+    AdapterOut:
     Body: 
   Gateway:
-    Imports: 
-    Endpoints: 
-    EndpointsRoutes: 
+    Imports:
+    Endpoints:
+    EndpointsRoutes:
   Service:
-    Dependencies: 
-    AdapterIn: 
-    AdapterOut: 
-    Body: 
+    Dependencies:
+    AdapterIn:
+    AdapterOut:
+    Body:

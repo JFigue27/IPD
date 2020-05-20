@@ -70,7 +70,7 @@ class ApproversList extends ListContainer<ApproverProps> {
     return (
       <NoSsr>
         {/* ///start:generated:content<<< */}
-        <Container className='md' maxWidth='md' style={{ padding: 5 }}>
+        <Container className='lg' maxWidth='lg' style={{ padding: 5 }}>
           <Paper style={{ width: '100%', overflowX: 'auto', marginTop: 20 }} elevation={5}>
             <Grid container direction='row' style={{ padding: 5 }}>
               <Grid item xs>

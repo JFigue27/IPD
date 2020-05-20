@@ -45,7 +45,7 @@ class MdcAttachmentFileForm extends FormContainer<MdcAttachmentFileProps> {
       <NoSsr>
         {/* ///start:generated:content<<< */}
 
-        <Container className='sm' style={{ padding: 20 }} maxWidth='sm'>
+        <Container className='sm' maxWidth='sm'>
           <TextField
             type='text'
             label='Mdc Attachment'
@@ -110,7 +110,7 @@ class MdcAttachmentFileForm extends FormContainer<MdcAttachmentFileProps> {
             }}
           />
         </Container>
-        <pre>{JSON.stringify(baseEntity, null, 3)}</pre>
+        {/* <pre>{JSON.stringify(baseEntity, null, 3)}</pre> */}
 
         {/* ///end:generated:content<<< */}
       </NoSsr>
