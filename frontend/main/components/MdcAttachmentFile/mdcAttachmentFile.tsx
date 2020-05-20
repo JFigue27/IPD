@@ -11,6 +11,7 @@ import { Container } from '@material-ui/core';
 ///end:generated:dependencies<<<
 
 import MdcAttachmentFileService from './mdcattachmentfile.service';
+import Attachments from '../../widgets/Attachments';
 
 const service = new MdcAttachmentFileService();
 const defaultConfig = {
@@ -46,7 +47,7 @@ class MdcAttachmentFileForm extends FormContainer<MdcAttachmentFileProps> {
         {/* ///start:generated:content<<< */}
 
         <Container className='sm' maxWidth='sm'>
-          <TextField
+          {/* <TextField
             type='text'
             label='Mdc Attachment'
             value={baseEntity.MdcAttachment || ''}
@@ -58,6 +59,14 @@ class MdcAttachmentFileForm extends FormContainer<MdcAttachmentFileProps> {
             InputProps={{
               readOnly: false
             }}
+          /> */}
+          <Attachments
+            owner={baseEntity}
+            kind='MdcAttachment'
+            folderBind='AttachmentsFolder'
+            listBind='Attachments'
+            readOnly={isDisabled}
+            onChange={this.onAttachmentsChange}
           />
 
           <TextField

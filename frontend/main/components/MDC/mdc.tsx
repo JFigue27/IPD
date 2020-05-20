@@ -36,9 +36,6 @@ class MDCForm extends FormContainer<MDCProps> {
     let { isLoading, isDisabled, baseEntity } = this.state;
     const { accounts } = this.state as any;
 
-    console.log(accounts);
-    console.log(PType);
-
     return (
       <NoSsr>
         {/* ///start:generated:content<<< */}
@@ -161,13 +158,7 @@ class MDCForm extends FormContainer<MDCProps> {
               </Grid>
             </Grid> */}
             <Grid container>
-              {baseEntity.Id > 0 && (
-                <>
-                  <Grid item xs={12}>
-                    <MdcAttachmentFiles mdc={baseEntity} />
-                  </Grid>
-                </>
-              )}
+              {baseEntity.Id > 0 && <MdcAttachmentFiles mdc={baseEntity} />}
               {baseEntity.Id > 0 && <Approvers mdc={baseEntity} />}
             </Grid>
 

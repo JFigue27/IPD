@@ -23,6 +23,14 @@ namespace MyApp.Logic
 {
     public class MdcAttachmentFileLogic : DocumentLogic<MdcAttachmentFile>, IDocumentLogicAsync<MdcAttachmentFile>
     {
+        public override List<MdcAttachmentFile> AdapterOut(params MdcAttachmentFile[] entities)
+        {
+            foreach (var item in entities)
+            {
+                item.Attachments = AttachmentsIO.getAttachmentsFromFolder(item.AttachmentsFolder, "MdcAttachment");
+            }
 
+            return entities.ToList();
+        }
     }
 }

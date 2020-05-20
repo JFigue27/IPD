@@ -401,6 +401,10 @@ namespace MyApp.Migrations
                         .HasColumnName("assigned_to")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("AttachmentsFolder")
+                        .HasColumnName("attachments_folder")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CheckedoutBy")
                         .HasColumnName("checkedout_by")
                         .HasColumnType("nvarchar(max)");

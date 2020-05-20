@@ -42,6 +42,7 @@ interface AttachmentsProps {
   kind?: string;
   onChange?: any;
   readOnly?: boolean;
+  noButton?: boolean;
   printMode?: boolean;
   afterDelete?: any;
   directUpload?: boolean;
@@ -232,7 +233,7 @@ class Attachments extends Component<AttachmentsProps> {
 
   render() {
     let { files } = this.state as any;
-    let { owner = {}, kind = '', listBind = 'Attachments', printMode, readOnly } = this.props;
+    let { owner = {}, kind = '', listBind = 'Attachments', printMode, readOnly, noButton } = this.props;
 
     const api = 'api_' + listBind;
     owner[api] = {};
@@ -307,7 +308,7 @@ class Attachments extends Component<AttachmentsProps> {
                 );
               })}
               <Grid container direction='row' alignItems='center'>
-                {!readOnly && (
+                {!readOnly && !noButton && (
                   <Grid item xs>
                     <Button
                       className='hidden-print'

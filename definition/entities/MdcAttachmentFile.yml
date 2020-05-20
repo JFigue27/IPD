@@ -7,6 +7,8 @@ Fields:
   Periodic Review: date
   Release Date: date
   Approval File Status: string
+  Attachments Folder: string
+  Attachments: List<Attachment>     | skip-db
 Relationships:
   Parent: 
   OneToMany: 

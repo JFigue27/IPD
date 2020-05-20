@@ -22,6 +22,7 @@ import Mdcattachmentfile from '../../components/MdcAttachmentFile/mdcAttachmentF
 ///end:generated:dependencies<<<
 
 import MdcAttachmentFileService from './mdcattachmentfile.service';
+import Attachments from '../../widgets/Attachments';
 
 const service = new MdcAttachmentFileService();
 const defaultConfig = {
@@ -41,7 +42,15 @@ class MdcAttachmentFilesList extends ListContainer<MdcAttachmentFileProps> {
 
   componentDidMount() {
     ///start:slot:load<<<
+    if (this.props.mdc && this.props.mdc.Id) {
+      this.load('MDCId=' + this.props.mdc.Id);
+    } else {
+      let { baseList } = this.state;
+      baseList.push({});
+      this.setState({ baseList });
+    }
     this.load();
+
     ///end:slot:load<<<
   }
 
@@ -134,7 +143,20 @@ class MdcAttachmentFilesList extends ListContainer<MdcAttachmentFileProps> {
                         </Grid>
                       </TableCell>
                       <TableCell>
-                        <Typography align='left'>{item.MdcAttachment}</Typography>
+                        <Attachments
+                          owner={item}
+                          kind='MdcAttachment'
+                          folderBind='AttachmentsFolder'
+                          listBind='Attachments'
+                          readOnly={isDisabled}
+                          onChange={this.onAttachmentsChange}
+                          directUpload
+                          afterUpload={async () => {
+                            await this.service.Save(item);
+                            this.refresh();
+                          }}
+                          noButton
+                        />
                       </TableCell>
                       <TableCell>
                         <Typography align='left'>{item.FileVersion}</Typography>

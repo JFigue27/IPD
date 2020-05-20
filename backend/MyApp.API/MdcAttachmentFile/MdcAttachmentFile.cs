@@ -20,6 +20,7 @@ namespace MyApp.Logic.Entities
 
             PeriodicReview = DateTimeOffset.Now;
             ReleaseDate = DateTimeOffset.Now;
+            Attachments = new List<Attachment>();
         }
 
         public string MdcAttachment { get; set; }
@@ -27,6 +28,11 @@ namespace MyApp.Logic.Entities
         public DateTimeOffset PeriodicReview { get; set; }
         public DateTimeOffset ReleaseDate { get; set; }
         public string ApprovalFileStatus { get; set; }
+        public string AttachmentsFolder { get; set; }
+
+        [NotMapped]
+        [Ignore]
+        public List<Attachment> Attachments { get; set; }
 
         [Reference]
         public List<AttachmentFileComment> AttachmentFileComments { get; set; }
