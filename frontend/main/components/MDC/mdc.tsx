@@ -9,6 +9,11 @@ import { KeyboardDateTimePicker } from '@material-ui/pickers';
 import Approvers from '../Approver/approvers';
 import MdcAttachmentFiles from '../MdcAttachmentFile/mdcAttachmentFiles';
 import Autocomplete from '../../widgets/Autocomplete';
+import Stepper from '../../widgets/Stepper';
+
+import UniversalCatalogService from '../Catalog/universal.catalog.service';
+
+const universalCatalogService = new UniversalCatalogService();
 
 const service = new MDCService();
 const defaultConfig = {
@@ -30,17 +35,34 @@ class MDCForm extends FormContainer<MDCProps> {
     this.load(this.props.data?.Id ? this.props.data.Id : {});
 
     accountService.LoadEntities().then(accounts => this.setState({ accounts }));
+    universalCatalogService.GetCatalog('Area').then(areas => {
+      this.setState({
+        areas
+      });
+    });
   }
 
   render() {
     let { isLoading, isDisabled, baseEntity } = this.state;
-    const { accounts } = this.state as any;
+    const { accounts, areas } = this.state as any;
+    console.log(areas);
 
     return (
       <NoSsr>
         {/* ///start:generated:content<<< */}
-        <Container maxWidth='lg'>
+        <Container maxWidth='xl'>
           <Grid container direction='column' justify='center' alignItems='center'>
+            <Grid item container direction='row' spacing={2}>
+              <Grid item xs>
+                <Typography variant='h4'>MDC</Typography>
+              </Grid>
+              <Grid item xs={10}>
+                <Stepper />
+              </Grid>
+              <Grid item xs>
+                <img src='/static/images/Molex_Red.png' alt='Logo Molex' style={{ width: 120, margin: 5 }} />
+              </Grid>
+            </Grid>
             <Grid item container direction='row' spacing={2}>
               <Grid item xs={2}>
                 <TextField
@@ -104,17 +126,15 @@ class MDCForm extends FormContainer<MDCProps> {
                   label='Owner'
                 />
               </Grid>
-              <Grid item xs={2}>
-                <TextField
-                  type='text'
+              <Grid item xs={2} style={{ marginTop: 11 }}>
+                <Autocomplete
+                  options={areas}
+                  displayValue='Value'
+                  fromProp='Value'
+                  owner={baseEntity}
+                  onChange={this.handleAutocomplete}
+                  targetProp='DepartmentArea'
                   label='Department or Area'
-                  variant='outlined'
-                  value={baseEntity.DepartmentArea || ''}
-                  onChange={event => this.handleInputChange(event, 'DepartmentArea')}
-                  style={{ textAlign: 'left' }}
-                  margin='normal'
-                  disabled={false}
-                  fullWidth
                 />
               </Grid>
               <Grid item xs={2}>

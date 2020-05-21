@@ -158,7 +158,7 @@ class MDCsList extends ListContainer<MDCProps> {
           </Paper>
         </Container>
 
-        <Dialog opener={this} id='mdc' title='MDC' okLabel='Save' maxWidth='lg' dividersOff>
+        <Dialog opener={this} id='mdc' okLabel='Save' fullScreen dividersOff>
           {dialog => <Mdc dialog={dialog} data={(this.state as any)['mdc']} />}
         </Dialog>
 
