@@ -42,6 +42,7 @@ class MDCsList extends ListContainer<MDCProps> {
   componentDidMount() {
     ///start:slot:load<<<
     this.load();
+
     ///end:slot:load<<<
   }
 
@@ -59,6 +60,8 @@ class MDCsList extends ListContainer<MDCProps> {
 
   render() {
     let { isLoading, baseEntity, baseList, filterOptions, isDisabled } = this.state;
+
+    console.log(baseList);
 
     return (
       <NoSsr>
@@ -159,7 +162,7 @@ class MDCsList extends ListContainer<MDCProps> {
         </Container>
 
         <Dialog opener={this} id='mdc' okLabel='Save' fullScreen dividersOff>
-          {dialog => <Mdc dialog={dialog} data={(this.state as any)['mdc']} />}
+          {dialog => <Mdc dialog={dialog} data={(this.state as any)['mdc']} Mdc={'Create'} />}
         </Dialog>
 
         <AppBar position='fixed' style={{ top: 'auto', bottom: 0 }}>
@@ -177,7 +180,7 @@ class MDCsList extends ListContainer<MDCProps> {
               size='small'
               onClick={event => {
                 event.stopPropagation();
-                this.createInstance({});
+                this.openDialog('mdc', event);
               }}
             >
               create

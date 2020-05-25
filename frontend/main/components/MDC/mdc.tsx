@@ -24,7 +24,9 @@ const accountService = new AccountService();
 
 const PType = ['Procedure', 'ITJ', 'Spec', 'WI', 'etc', 'etc2'];
 
-interface MDCProps extends FormProps {}
+interface MDCProps extends FormProps {
+  Mdc?: any;
+}
 
 class MDCForm extends FormContainer<MDCProps> {
   constructor(props, config) {
@@ -32,7 +34,7 @@ class MDCForm extends FormContainer<MDCProps> {
   }
 
   componentDidMount() {
-    this.load(this.props.data?.Id ? this.props.data.Id : {});
+    this.load(this.props.data?.Id ? this.props.data.Id : { DocumentStatus: 'Create' });
 
     accountService.LoadEntities().then(accounts => this.setState({ accounts }));
     universalCatalogService.GetCatalog('Area').then(areas => {
@@ -45,7 +47,7 @@ class MDCForm extends FormContainer<MDCProps> {
   render() {
     let { isLoading, isDisabled, baseEntity } = this.state;
     const { accounts, areas } = this.state as any;
-    console.log(areas);
+    // console.log(areas);
 
     return (
       <NoSsr>
@@ -114,6 +116,7 @@ class MDCForm extends FormContainer<MDCProps> {
                   disabled={false}
                   fullWidth
                 />
+                {baseEntity.DocumentStatus}
               </Grid>
               <Grid item xs={3} style={{ marginTop: 11 }}>
                 <Autocomplete
