@@ -162,7 +162,7 @@ class MDCsList extends ListContainer<MDCProps> {
         </Container>
 
         <Dialog opener={this} id='mdc' okLabel='Save' fullScreen dividersOff>
-          {dialog => <Mdc dialog={dialog} data={(this.state as any)['mdc']} Mdc={'Create'} />}
+          {dialog => <Mdc dialog={dialog} data={(this.state as any)['mdc']} /* Mdc={'Create'} */ />}
         </Dialog>
 
         <AppBar position='fixed' style={{ top: 'auto', bottom: 0 }}>

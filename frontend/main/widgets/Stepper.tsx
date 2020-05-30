@@ -40,9 +40,14 @@ function getStepContent(stepIndex: number) {
   }
 }
 
-export default function HorizontalLabelPositionBelowStepper() {
+interface props {
+  activeStepStatus?: number;
+}
+
+export default function HorizontalLabelPositionBelowStepper(props) {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(props.activeStepStatus);
+
   const steps = getSteps();
 
   const handleNext = () => {
@@ -56,6 +61,9 @@ export default function HorizontalLabelPositionBelowStepper() {
   const handleReset = () => {
     setActiveStep(0);
   };
+  console.log(this.props.activeStepStatus);
+
+  console.log(activeStep);
 
   return (
     <div className={classes.root}>
@@ -67,7 +75,8 @@ export default function HorizontalLabelPositionBelowStepper() {
         ))}
       </Stepper>
       <div>
-        {activeStep === steps.length ? (
+        {activeStep}
+        {/* {activeStep === steps.length ? (
           <div>
             <Typography className={classes.instructions}>All steps completed</Typography>
             <Button onClick={handleReset}>Reset</Button>
@@ -84,7 +93,7 @@ export default function HorizontalLabelPositionBelowStepper() {
               </Button>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

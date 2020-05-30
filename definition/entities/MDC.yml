@@ -8,7 +8,7 @@ Fields:
   MDC Dead Line: date
   Department Area: string
   Owner: string
-  Approval Status: string
+  Approval Status: number
   Is Need Training: boolean
   Comments: string
 Relationships:

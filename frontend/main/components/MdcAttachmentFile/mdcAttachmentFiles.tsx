@@ -68,10 +68,12 @@ class MdcAttachmentFilesList extends ListContainer<MdcAttachmentFileProps> {
 
   render() {
     let { isLoading, baseEntity, baseList, filterOptions, isDisabled } = this.state;
+    console.log(baseList);
 
     return (
       <NoSsr>
         {/* ///start:generated:content<<< */}
+
         <Container className='lg' style={{ padding: 5 }} maxWidth='xl'>
           <Paper style={{ width: '100%', overflowX: 'auto', marginTop: 20 }} elevation={5}>
             <Grid container direction='row' style={{ padding: 5 }}>

@@ -276,9 +276,9 @@ namespace MyApp.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ApprovalStatus")
+                    b.Property<int>("ApprovalStatus")
                         .HasColumnName("approval_status")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("int");
 
                     b.Property<string>("AssignedBy")
                         .HasColumnName("assigned_by")

@@ -27,7 +27,7 @@ namespace MyApp.Logic.Entities
         public DateTimeOffset MDCDeadLine { get; set; }
         public string DepartmentArea { get; set; }
         public string Owner { get; set; }
-        public string ApprovalStatus { get; set; }
+        public int ApprovalStatus { get; set; }
         public bool IsNeedTraining { get; set; }
         public string Comments { get; set; }
 

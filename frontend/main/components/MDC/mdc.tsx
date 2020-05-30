@@ -1,6 +1,19 @@
 import React from 'react';
 import { withRouter } from 'next/router';
-import { NoSsr, Typography, Grid, TextField, Container, Paper, FormControlLabel, Switch } from '@material-ui/core';
+import {
+  NoSsr,
+  Typography,
+  Grid,
+  TextField,
+  Container,
+  Paper,
+  FormControlLabel,
+  Switch,
+  Button,
+  Stepper,
+  Step,
+  StepLabel
+} from '@material-ui/core';
 import FormContainer, { FormProps } from '../../core/FormContainer';
 import { withSnackbar } from 'notistack';
 
@@ -9,7 +22,6 @@ import { KeyboardDateTimePicker } from '@material-ui/pickers';
 import Approvers from '../Approver/approvers';
 import MdcAttachmentFiles from '../MdcAttachmentFile/mdcAttachmentFiles';
 import Autocomplete from '../../widgets/Autocomplete';
-import Stepper from '../../widgets/Stepper';
 
 import UniversalCatalogService from '../Catalog/universal.catalog.service';
 
@@ -28,13 +40,15 @@ interface MDCProps extends FormProps {
   Mdc?: any;
 }
 
+const steps = ['Create', 'Review', 'Approved', 'Release', 'Obsolete'];
+
 class MDCForm extends FormContainer<MDCProps> {
   constructor(props, config) {
     super(props, Object.assign(defaultConfig, config));
   }
 
   componentDidMount() {
-    this.load(this.props.data?.Id ? this.props.data.Id : { DocumentStatus: 'Create' });
+    this.load(this.props.data?.Id ? this.props.data.Id : { DocumentStatus: 'Create', ApprovalStatus: 0 });
 
     accountService.LoadEntities().then(accounts => this.setState({ accounts }));
     universalCatalogService.GetCatalog('Area').then(areas => {
@@ -47,19 +61,28 @@ class MDCForm extends FormContainer<MDCProps> {
   render() {
     let { isLoading, isDisabled, baseEntity } = this.state;
     const { accounts, areas } = this.state as any;
-    // console.log(areas);
 
     return (
       <NoSsr>
         {/* ///start:generated:content<<< */}
+
         <Container maxWidth='xl'>
           <Grid container direction='column' justify='center' alignItems='center'>
             <Grid item container direction='row' spacing={2}>
               <Grid item xs>
-                <Typography variant='h4'>MDC</Typography>
+                <Typography variant='h4' align='center'>
+                  MDC
+                </Typography>
               </Grid>
-              <Grid item xs={10}>
-                <Stepper />
+              <Grid item xs={12} sm={7} md={8} lg={8} xl={10}>
+                <Stepper activeStep={baseEntity.ApprovalStatus} alternativeLabel>
+                  {steps.map(label => (
+                    <Step key={label}>
+                      <StepLabel>{label}</StepLabel>
+                    </Step>
+                  ))}
+                </Stepper>
+                {/* <Stepper activeStepStatus={baseEntity.ApprovalStatus} /> */}
               </Grid>
               <Grid item xs>
                 <img src='/static/images/Molex_Red.png' alt='Logo Molex' style={{ width: 120, margin: 5 }} />
@@ -116,7 +139,6 @@ class MDCForm extends FormContainer<MDCProps> {
                   disabled={false}
                   fullWidth
                 />
-                {baseEntity.DocumentStatus}
               </Grid>
               <Grid item xs={3} style={{ marginTop: 11 }}>
                 <Autocomplete
@@ -146,7 +168,7 @@ class MDCForm extends FormContainer<MDCProps> {
                     <Switch
                       color='primary'
                       onChange={event => this.handleCheckBoxChange(event, 'isNeedTraining')}
-                      checked={baseEntity.isNeedTraining == 1}
+                      checked={baseEntity.isNeedTraining}
                       value={baseEntity.isNeedTraining}
                     />
                   }
@@ -181,6 +203,9 @@ class MDCForm extends FormContainer<MDCProps> {
               </Grid>
             </Grid> */}
             <Grid container>
+              {/* {baseEntity.DocumentStatus} | {baseEntity.ApprovalStatus} | {baseEntity.isNeedTraining} */}
+              {baseEntity.Id}
+              <pre>{JSON.stringify(baseEntity, null, 3)}</pre>
               {baseEntity.Id > 0 && <MdcAttachmentFiles mdc={baseEntity} />}
               {baseEntity.Id > 0 && <Approvers mdc={baseEntity} />}
             </Grid>
