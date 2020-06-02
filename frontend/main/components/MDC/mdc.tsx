@@ -12,7 +12,8 @@ import {
   Button,
   Stepper,
   Step,
-  StepLabel
+  StepLabel,
+  Icon
 } from '@material-ui/core';
 import FormContainer, { FormProps } from '../../core/FormContainer';
 import { withSnackbar } from 'notistack';
@@ -24,6 +25,7 @@ import MdcAttachmentFiles from '../MdcAttachmentFile/mdcAttachmentFiles';
 import Autocomplete from '../../widgets/Autocomplete';
 
 import UniversalCatalogService from '../Catalog/universal.catalog.service';
+import ElectronicSignature from './mdc.electronicSignature'
 
 const universalCatalogService = new UniversalCatalogService();
 
@@ -32,15 +34,15 @@ const defaultConfig = {
   service
 };
 import AccountService from '../Account/account.service';
+import Dialog from '../../widgets/Dialog';
 const accountService = new AccountService();
 
 const PType = ['Procedure', 'ITJ', 'Spec', 'WI', 'etc', 'etc2'];
+const steps = ['Create', 'Review', 'Approved', 'Release', 'Obsolete'];
 
 interface MDCProps extends FormProps {
   Mdc?: any;
 }
-
-const steps = ['Create', 'Review', 'Approved', 'Release', 'Obsolete'];
 
 class MDCForm extends FormContainer<MDCProps> {
   constructor(props, config) {
@@ -102,7 +104,23 @@ class MDCForm extends FormContainer<MDCProps> {
                   fullWidth
                 />
               </Grid>
-              <Grid item xs={8}></Grid>
+              <Grid item xs={2}></Grid>
+              <Grid item xs={6}>
+                <Typography align='center'>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    endIcon={<Icon>send</Icon>}
+                    style={{ margin: 10 }}
+                    onClick={event => {
+                      event.stopPropagation();
+                      this.openDialog('electronic-signature', event);
+                    }}
+                  >
+                    Send MDC # {baseEntity.ControlNumber} to Approved State
+                  </Button>
+                </Typography>
+              </Grid>
               <Grid item xs={2}>
                 <KeyboardDateTimePicker
                   clearable
@@ -118,9 +136,10 @@ class MDCForm extends FormContainer<MDCProps> {
             </Grid>
             <Grid item container direction='row' spacing={2}>
               <Grid item xs={2} style={{ marginTop: 11 }}>
+                {/* // Todo: See error in console! */}
                 <Autocomplete
                   flat
-                  options={PType}
+                  options={PType.map(o => o)}
                   owner={baseEntity}
                   onChange={this.handleAutocomplete}
                   targetProp='ProcessType'
@@ -168,7 +187,7 @@ class MDCForm extends FormContainer<MDCProps> {
                     <Switch
                       color='primary'
                       onChange={event => this.handleCheckBoxChange(event, 'isNeedTraining')}
-                      checked={baseEntity.isNeedTraining}
+                      checked={baseEntity.isNeedTraining == 1}
                       value={baseEntity.isNeedTraining}
                     />
                   }
@@ -204,8 +223,8 @@ class MDCForm extends FormContainer<MDCProps> {
             </Grid> */}
             <Grid container>
               {/* {baseEntity.DocumentStatus} | {baseEntity.ApprovalStatus} | {baseEntity.isNeedTraining} */}
-              {baseEntity.Id}
-              <pre>{JSON.stringify(baseEntity, null, 3)}</pre>
+              {/* <pre>{baseEntity.isNeedTraining}</pre>
+              <pre>{JSON.stringify(baseEntity, null, 3)}</pre> */}
               {baseEntity.Id > 0 && <MdcAttachmentFiles mdc={baseEntity} />}
               {baseEntity.Id > 0 && <Approvers mdc={baseEntity} />}
             </Grid>
@@ -213,6 +232,9 @@ class MDCForm extends FormContainer<MDCProps> {
             {/* <pre>{JSON.stringify(baseEntity, null, 3)}</pre> */}
           </Grid>
         </Container>
+        <Dialog opener={this} id='electronic-signature' okLabel='' maxWidth='md' dividersOff actionsOff>
+          {dialog => <ElectronicSignature dialog={dialog} data={(this.state as any)['electronic-signature']} ElectSign={baseEntity} />}
+        </Dialog>
         {/* ///end:generated:content<<< */}
       </NoSsr>
     );

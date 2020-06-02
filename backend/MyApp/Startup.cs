@@ -240,8 +240,8 @@ namespace MyApp
             // container.Register(c => dbFactory.Open());
             // container.Register(c => c.Resolve<IDbConnectionFactory>().OpenDbConnection()).ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWired<RevisionLogic>().ReusedWithin(ReuseScope.Request);
-            MailgunService.AppSettings = AppSettings;
-            container.Register<IEmailService>(i => new MailgunService()).ReusedWithin(ReuseScope.Request);
+            EmailService.AppSettings = AppSettings;
+            container.Register<IEmailService>(i => new EmailService()).ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWired<CatalogLogic>().ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWired<CatalogDefinitionLogic>().ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWired<FieldLogic>().ReusedWithin(ReuseScope.Request);

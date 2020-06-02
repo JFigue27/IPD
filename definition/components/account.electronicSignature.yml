@@ -1,0 +1,10 @@
+Name: mdc.electronicSignature
+Type: form
+Entity: MDC
+Layout:
+  - container md:
+      - col:
+          - as-is: MDCNumber
+Slots:
+  Load: |
+    this.openDialog('electronic-signature', {});

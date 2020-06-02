@@ -144,7 +144,30 @@ namespace MyApp.API
         }
         #endregion
 
+        #region Endpoints - Specific
+
+        public object Post(ChangeStatus request)
+        {
+            return InTransaction(db =>
+            {
+                Logic.ChangeStatus(request.ControlNumber);
+                return new CommonResponse();
+            });
+        }
+
+        #endregion
+
     }
+
+    #region Specific
+
+    [Route("/Mdc/ChangeStatus", "POST")]
+    public class ChangeStatus
+    {
+        public string ControlNumber { get; set; }
+    }
+
+    #endregion
 
     #region Generic Read Only
     [Route("/MDC", "GET")]

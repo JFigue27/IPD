@@ -68,7 +68,7 @@ class MdcAttachmentFilesList extends ListContainer<MdcAttachmentFileProps> {
 
   render() {
     let { isLoading, baseEntity, baseList, filterOptions, isDisabled } = this.state;
-    console.log(baseList);
+    // console.log(baseList);
 
     return (
       <NoSsr>

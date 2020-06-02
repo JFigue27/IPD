@@ -61,7 +61,7 @@ class MDCsList extends ListContainer<MDCProps> {
   render() {
     let { isLoading, baseEntity, baseList, filterOptions, isDisabled } = this.state;
 
-    console.log(baseList);
+    // console.log(baseList);
 
     return (
       <NoSsr>
